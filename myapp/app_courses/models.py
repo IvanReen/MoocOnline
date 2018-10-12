@@ -21,6 +21,9 @@ class Course(models.Model):
         verbose_name = '课程表'
         verbose_name_plural = verbose_name
 
+    def __str__(self):
+        return self.name        # 设置在xadmin后台显示字段, 注意如果此表被另外的了外键关联了，这个返回字段就是外键表的外键名称
+
 
 class Lesson(models.Model):
     course = models.ForeignKey(Course, verbose_name='外键课程表', on_delete=models.CASCADE)      # 外键链表，外键连接Course表的主键，一对多关系
@@ -30,6 +33,9 @@ class Lesson(models.Model):
     class Meta:
         verbose_name = '课程章节表'
         verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.name        # 设置在xadmin后台显示字段, 注意如果此表被另外的了外键关联了，这个返回字段就是外键表的外键名称
 
 
 class Video(models.Model):
@@ -41,6 +47,9 @@ class Video(models.Model):
         verbose_name = '课程视频表'
         verbose_name_plural = verbose_name
 
+    def __str__(self):
+        return self.name
+
 
 class CourseResource(models.Model):
     course = models.ForeignKey(Course, verbose_name='外键课程表', on_delete=models.CASCADE)
@@ -51,3 +60,6 @@ class CourseResource(models.Model):
     class Meta:
         verbose_name = '课程资源表'
         verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.name

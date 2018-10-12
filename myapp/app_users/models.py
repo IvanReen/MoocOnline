@@ -27,6 +27,9 @@ class Users(models.Model):       # 创建类必须继承models.Model，类名将
         verbose_name = '用户信息表'
         verbose_name_plural = verbose_name
 
+    def __str__(self):
+        return self.username
+
 
 class Email(models.Model):
     code = models.CharField(max_length=20, verbose_name='验证码')
@@ -38,6 +41,8 @@ class Email(models.Model):
         verbose_name = '用户邮箱验证码表'
         verbose_name_plural = verbose_name
 
+    def __str__(self):
+        return self.email
 
 class Banner(models.Model):
     title = models.CharField(max_length=100, verbose_name='轮播图标题')
@@ -49,3 +54,6 @@ class Banner(models.Model):
     class Meta:
         verbose_name = '网站轮播图表'
         verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.title
