@@ -17,7 +17,7 @@ import sys
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(BASE_DIR, 'myapp'))                          # 将apps目录设置成python可识别目录
-
+sys.path.insert(1, os.path.join(BASE_DIR, 'myext'))                          # 将ext目录设置成python可识别目录
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
@@ -40,11 +40,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'users',
-    'courses',
-    'organization',
-    'operation',
-
+    'app_users',
+    'app_courses',
+    'app_organization',
+    'app_operation',
+    'xadmin',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
