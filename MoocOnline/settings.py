@@ -44,9 +44,37 @@ INSTALLED_APPS = [
     'app_courses',
     'app_organization',
     'app_operation',
-    'xadmin',
-    'crispy_forms',
+    'xadmin',                           # 注册xadmin的app
+    'crispy_forms',                     # 注册xadmin的依赖app
+    'captcha',                          # 注册验证码app
+    'utils',
 ]
+
+# 格式
+CAPTCHA_OUTPUT_FORMAT = u'%(text_field)s %(hidden_field)s %(image)s'
+# 噪点样式
+CAPTCHA_NOISE_FUNCTIONS = (
+    'captcha.helpers.noise_null',       # 没有样式
+    # 'captcha.helpers.noise_arcs',     # 线
+    'captcha.helpers.noise_dots',       # 点
+)
+# 图片大小
+CAPTCHA_IMAGE_SIZE = (100, 30)
+# 字符个数
+CAPTCHA_LENGTH = 4
+# 超时(minutes)
+CAPTCHA_TIMEOUT = 1
+# 文字倾斜
+CAPTCHA_LETTER_ROTATION = (-10,10)
+# 背景颜色
+CAPTCHA_BACKGROUND_COLOR = '#FFFFFF'
+# 文字颜色
+CAPTCHA_FOREGROUND_COLOR = '#0A12E5'
+# 验证码类型
+# 图片中的文字为随机英文字母，如 mdsh
+CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.random_char_challenge'
+# 图片中的文字为数字表达式，如1+2=
+# CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -139,4 +167,19 @@ USE_TZ = False                  # 设置数据库写入时间，不用国际时�
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
-STATIC_URL = '/static/'
+
+STATIC_URL = '/static/'    # 设置静态文件前缀名称
+#配置静态文件目录
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),   # 设置静态文件路径
+]
+
+# session配置
+SESSION_COOKIE_NAME = "_sessionid_"             # Session的cookie保存在浏览器上时的key，即：sessionid＝随机字符串（默认）
+SESSION_COOKIE_PATH = "/"                       # Session的cookie保存的路径（默认）
+SESSION_COOKIE_DOMAIN = None                    # Session的cookie保存的域名（默认）
+SESSION_COOKIE_SECURE = False                   # 是否Https传输cookie（默认）
+SESSION_COOKIE_HTTPONLY = True                  # 是否Session的cookie只支持http传输（默认）
+SESSION_COOKIE_AGE = 1209600                    # Session的cookie失效日期（2周）（默认）
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False         # 是否关闭浏览器使得Session过期（默认）
+SESSION_SAVE_EVERY_REQUEST = False              # 是否每次请求都保存Session，默认修改之后才保存（默认），默认就好
