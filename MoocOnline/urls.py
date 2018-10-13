@@ -2,7 +2,7 @@
 from django.urls import path
 
 import xadmin                             # 导入xadmin
-from users.views import IndexView, LoginView
+from users.views import IndexView, LoginView, LogoutView, RegisterView
 
 urlpatterns = [
     path('xadmin/', xadmin.site.urls),
@@ -12,4 +12,7 @@ urlpatterns = [
 
 # 退出功能url
     path('logout/', LogoutView.as_view(), name="logout"),
+
+# 注册url
+    path("register/", RegisterView.as_view(), name = "register" ),
 ]

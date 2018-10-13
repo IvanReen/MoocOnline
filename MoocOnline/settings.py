@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'operation',
     'organization',
     'DjangoUeditor',
+    'captcha',
 
 ]
 
@@ -146,3 +147,15 @@ USE_TZ = False                  # 设置数据库写入时间，不用国际时�
 
 STATIC_URL = '/static/'    # 设置静态文件前缀名称
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+
+# 发送邮件的setting设置
+
+EMAIL_HOST = "smtp.qq.com"
+EMAIL_PORT = 25
+EMAIL_HOST_USER = "1178820116@qq.com"
+EMAIL_HOST_PASSWORD = "shangxin25"
+EMAIL_USE_TLS= True
+EMAIL_FROM = "1178820116@qq.com"
