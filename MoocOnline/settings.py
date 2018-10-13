@@ -40,41 +40,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'app_users',
-    'app_courses',
-    'app_organization',
-    'app_operation',
-    'xadmin',                           # 注册xadmin的app
-    'crispy_forms',                     # 注册xadmin的依赖app
-    'captcha',                          # 注册验证码app
-    'utils',
-]
+    'users',
+    'courses',
+    'operation',
+    'organization',
+    'DjangoUeditor',
 
-# 格式
-CAPTCHA_OUTPUT_FORMAT = u'%(text_field)s %(hidden_field)s %(image)s'
-# 噪点样式
-CAPTCHA_NOISE_FUNCTIONS = (
-    'captcha.helpers.noise_null',       # 没有样式
-    # 'captcha.helpers.noise_arcs',     # 线
-    'captcha.helpers.noise_dots',       # 点
-)
-# 图片大小
-CAPTCHA_IMAGE_SIZE = (100, 30)
-# 字符个数
-CAPTCHA_LENGTH = 4
-# 超时(minutes)
-CAPTCHA_TIMEOUT = 1
-# 文字倾斜
-CAPTCHA_LETTER_ROTATION = (-10,10)
-# 背景颜色
-CAPTCHA_BACKGROUND_COLOR = '#FFFFFF'
-# 文字颜色
-CAPTCHA_FOREGROUND_COLOR = '#0A12E5'
-# 验证码类型
-# 图片中的文字为随机英文字母，如 mdsh
-CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.random_char_challenge'
-# 图片中的文字为数字表达式，如1+2=
-# CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -111,24 +83,24 @@ WSGI_APPLICATION = 'MoocOnline.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-
-# MySQL数据库
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.mysql',       # 配置数据库引擎名称
-#         'NAME': 'mooconline',                         # 数据库名称
-#         'USER': 'root',                             # 数据库用户名
-#         'PASSWORD': '7980',                       # 数据库密码
-#         'HOST': '127.0.0.1',                        # 数据库链接地址
-#         'PORT': '3306',                             # 数据库端口
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #     }
 # }
+
+# MySQL数据库
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',       # 配置数据库引擎名称
+        'NAME': 'mooconline',                         # 数据库名称
+        'USER': 'root',                             # 数据库用户名
+        'PASSWORD': '7890',                       # 数据库密码
+        'HOST': '127.0.0.1',                        # 数据库链接地址
+        'PORT': 3306,                             # 数据库端口
+    }
+}
 
 
 # Password validation
@@ -169,17 +141,4 @@ USE_TZ = False                  # 设置数据库写入时间，不用国际时�
 
 
 STATIC_URL = '/static/'    # 设置静态文件前缀名称
-#配置静态文件目录
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),   # 设置静态文件路径
-]
 
-# session配置
-SESSION_COOKIE_NAME = "_sessionid_"             # Session的cookie保存在浏览器上时的key，即：sessionid＝随机字符串（默认）
-SESSION_COOKIE_PATH = "/"                       # Session的cookie保存的路径（默认）
-SESSION_COOKIE_DOMAIN = None                    # Session的cookie保存的域名（默认）
-SESSION_COOKIE_SECURE = False                   # 是否Https传输cookie（默认）
-SESSION_COOKIE_HTTPONLY = True                  # 是否Session的cookie只支持http传输（默认）
-SESSION_COOKIE_AGE = 1209600                    # Session的cookie失效日期（2周）（默认）
-SESSION_EXPIRE_AT_BROWSER_CLOSE = False         # 是否关闭浏览器使得Session过期（默认）
-SESSION_SAVE_EVERY_REQUEST = False              # 是否每次请求都保存Session，默认修改之后才保存（默认），默认就好
