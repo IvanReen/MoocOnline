@@ -30,11 +30,15 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODEL = "users.UserProfile"
 
 # Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
+    'xadmin',
+    'crispy_forms',
+    'reversion',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
