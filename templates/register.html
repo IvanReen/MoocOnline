@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
-    <title>mtianyan慕课小站注册</title>
+    <title>ai慕学&nbsp;&nbsp;&nbsp;&nbsp;注册</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
 
@@ -66,11 +66,11 @@
 <header>
     <div class="c-box fff-box">
         <div class="wp header-box">
-            <p class="fl hd-tips">mtianyan慕课小站，在线学习平台！</p>
+            <p class="fl hd-tips">ai慕学，在线学习平台！</p>
             <ul class="fr hd-bar">
-                <li>服务电话：<span>2333333333</span></li>
-                <li><a href="{% url 'login' %}">[登录]</a></li>
-                <li class="active"><a href="{% url 'register' %}">[注册]</a></li>
+                <li>服务电话：<span>4008003300</span></li>
+                <li><a href="/login/">[登录]</a></li>
+                <li class="active"><a href="/register/">[注册]</a></li>
             </ul>
         </div>
     </div>
@@ -79,7 +79,7 @@
     <div class="c-box bg-box">
         <div class="login-box clearfix">
             <div class="hd-login clearfix">
-                <a class="index-logo" href="{% url 'index' %}"></a>
+                <a class="index-logo" href="/"></a>
                 <h1>用户注册</h1>
                 <a class="index-font" href="{% url 'index' %}">回到首页</a>
             </div>
@@ -87,11 +87,11 @@
                 <div class="imgslide">
                     <ul class="imgs">
 
-                        <li><a href=""><img width="483" height="472" src="http://myphoto.mtianyan.cn/blog/180111/BF6d8jeg5K.png?imageslim" /></a></li>
+                        <li><a href=""><img width="483" height="472" src="{% static 'images/57a801860001c34b12000460.jpg' %}" /></a></li>
 
-                        <li><a href=""><img width="483" height="472" src="{% static 'images/register2.png' %}" /></a></li>
+                        <li><a href=""><img width="483" height="472" src="{% static 'images/57a801860001c34b12000460.jpg' %}" /></a></li>
 
-                        <li><a href=""><img width="483" height="472" src="{% static 'images/register1.png' %}" /></a></li>
+                        <li><a href=""><img width="483" height="472" src="{% static 'images/57a801860001c34b12000460.jpg' %}" /></a></li>
 
                     </ul>
                 </div>
@@ -103,16 +103,17 @@
                     <!--<h2 class="active">手机注册</h2>-->
                     <h2>邮箱注册</h2>
                 </div>
-<!-- <div class="tab-form"> -->
+                <!--<div class="tab-form">-->
                     <!--<form id="mobile_register_form" autocomplete="off">-->
+                        <!--<input type='hidden' name='csrfmiddlewaretoken' value='gTZljXgnpvxn0fKZ1XkWrM1PrCGSjiCZ' />-->
                         <!--<div class="form-group marb20">-->
                             <!--<label>手&nbsp;机&nbsp;号</label>-->
                             <!--<input id="jsRegMobile" name="account" type="text" placeholder="请输入您的手机号码" />-->
                         <!--</div>-->
-                    <!--<div class="form-group marb20" id="jsRefreshCode">
-                            <label>验&nbsp;证&nbsp;码</label>
-                           <input autocomplete="off" class="form-control-captcha mobile-register-captcha" id="mobile-register-captcha_1" name="captcha_m_1" placeholder="请输入验证码" type="text" /> <input class="form-control-captcha mobile-register-captcha" id="mobile-register-captcha_0" name="captcha_m_0" placeholder="请输入验证码" type="hidden" value="29953bacf7005e8469388b449d97d00d523c1706" /> &nbsp;<img src="/captcha/image/29953bacf7005e8469388b449d97d00d523c1706/" alt="captcha" class="captcha" />-->
-                       <!--</div>-->
+                        <!--<div class="form-group marb20" id="jsRefreshCode">-->
+                            <!--<label>验&nbsp;证&nbsp;码</label>-->
+                            <!--<input autocomplete="off" class="form-control-captcha mobile-register-captcha" id="mobile-register-captcha_1" name="captcha_m_1" placeholder="请输入验证码" type="text" /> <input class="form-control-captcha mobile-register-captcha" id="mobile-register-captcha_0" name="captcha_m_0" placeholder="请输入验证码" type="hidden" value="29953bacf7005e8469388b449d97d00d523c1706" /> &nbsp;<img src="/captcha/image/29953bacf7005e8469388b449d97d00d523c1706/" alt="captcha" class="captcha" />-->
+                        <!--</div>-->
                         <!--<div class="clearfix">-->
                             <!--<div class="form-group marb8 verify-code">-->
                                 <!--<label>短信验证码</label>-->
@@ -133,27 +134,27 @@
                 <!--</div>-->
                 <div class="tab-form">
                     <form id="email_register_form" method="post" action="{% url 'register' %}" autocomplete="off">
-                        <div class="form-group marb20 {% if register_form.email.errors %} errorput{% endif %}">
+                        <input type='hidden' name='csrfmiddlewaretoken' value='gTZljXgnpvxn0fKZ1XkWrM1PrCGSjiCZ' />
+                        <div class="form-group marb20 {% if register_form.errors.email %}errorput{% endif %}">
                             <label>邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱</label>
-                            <input  type="text" id="id_email" name="email" value="{% ifnotequal None register_form.email.value %}{{ register_form.email.value }}{% endifnotequal %}" placeholder="请输入您的邮箱地址" />
+                            <input  type="text" id="id_email" name="email" value="{{ register_form.email.value }}" placeholder="请输入您的邮箱地址" />
                         </div>
-                        <div class="form-group marb8 {% if register_form.password.errors %} errorput{% endif %}">
+                        <div class="form-group marb8 {% if register_form.errors.password %}errorput{% endif %}">
                             <label>密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码</label>
-                            <input type="password" id="id_password" name="password"  value="{% ifnotequal None register_form.password.value %}{{ register_form.password.value }}{% endifnotequal %}" placeholder="请输入6-20位非中文字符密码" />
+                            <input type="password" id="id_password" name="password"  value="{{ register_form.password.value }}" placeholder="请输入6-20位非中文字符密码" />
                         </div>
-                        <div class="form-group marb8 captcha1 {% if register_form.captcha.errors %} errorput{% endif %}">
+                        <div class="form-group marb8 captcha1 {% if register_form.errors.captcha %}errorput{% endif %}">
                             <label>验&nbsp;证&nbsp;码</label>
-                           {{ register_form.captcha }}
-                            {{ active_form.captcha }}
+                            {{ register_form.captcha }}
                         </div>
-                        <div class="error btns" id="jsEmailTips">{% for key, error in register_form.errors.items %}{{ error }}{% endfor %}{{ msg }}</div>
+                        <div class="error btns" id="jsEmailTips">{% for key,error in register_form.errors.items %}{{ error }}{% endfor %}{{ msg }}</div>
                         <div class="auto-box marb8">
                         </div>
                         <input class="btn btn-green" id="jsEmailRegBtn" type="submit" value="注册并登录" />
-                        {% csrf_token %}
+                    {% csrf_token %}
                     </form>
                 </div>
-                <p class="form-p">已有账号？<a href="{% url 'login' %}">[立即登录]</a></p>
+                <p class="form-p">已有账号？<a href="login.html">[立即登录]</a></p>
             </div>
         </div>
     </div>
