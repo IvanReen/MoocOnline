@@ -6,7 +6,7 @@
 ```
 $ git clone https://github.com/smallren101/MoocOnline.git
 $ cd MoocOnline
-$ pip install -r req.txt
+$ pip install -r requirements.txt
 $ python manage.py runserver
 ```
 
