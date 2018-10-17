@@ -38,20 +38,24 @@ class UserProfileAdmin(UserAdmin):
             )
         return super(UserAdmin, self).get_form_layout()
 
+
 class BaseSetting(object):
     enable_themes = True
     use_bootswatch = True
+
 
 class GlobalSettings(object):
     site_title = "ai慕学后台管理系统"
     site_footer = "ai慕学在线网"
     # menu_style = "accordion"
 
+
 class EmailVerifyRecordAdmin(object):
     list_display = ['code', 'email', 'send_type', 'send_time']
     search_fields = ['code', 'email', 'send_type']
     list_filter = ['code', 'email', 'send_type', 'send_time']
     model_icon = 'fa fa-address-book-o'
+
 
 class BannerAdmin(object):
     list_display = ['title', 'image', 'url', 'index', 'add_time']

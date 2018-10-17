@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
-	<title>{% block title %}个人资料 - aiai慕学网{% endblock %}</title>
+	<title>{% block title %}个人资料 - ai慕学网{% endblock %}</title>
 	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
@@ -25,7 +25,7 @@
 		<div  class="header2 header">
  			<div class="top">
 				<div class="wp">
-					<div class="fl"><p>服务电话：<b>33333333</b></p></div>
+					<div class="fl"><p>服务电话：<b>4008003300</b></p></div>
 					<!--登录后跳转-->
                     
                         {% if request.user.is_authenticated %}
@@ -178,7 +178,7 @@
 <div class="dialog" id="jsDialog">
     <div class="successbox dialogbox" id="jsSuccessTips">
         <h1>成功提交</h1>
-        <div class="close jsCloseDialog"><img src="../images/dig_close.png"/></div>
+        <div class="close jsCloseDialog"><img src="{% static 'images/dig_close.png' %}"/></div>
         <div class="cont">
             <h2>您的需求提交成功！</h2>
             <p></p>
