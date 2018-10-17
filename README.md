@@ -51,5 +51,3 @@ create database mooconline charset='utf8';
 很高兴我的项目代码对你有帮助，请我吃包辣条吧！
 
 微信打赏:
-
-![mark](\static\images\code.jpg)
