@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2018-10-17 10:00:30
+Date: 2018-10-17 13:30:34
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -247,15 +247,16 @@ CREATE TABLE `captcha_captchastore` (
   `expiration` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `hashkey` (`hashkey`)
-) ENGINE=MyISAM AUTO_INCREMENT=227 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=235 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of captcha_captchastore
 -- ----------------------------
-INSERT INTO `captcha_captchastore` VALUES ('224', 'TCKN', 'tckn', '2dd1244f8efca32bd489f1eeba39b893dff1a142', '2016-11-13 12:16:48');
-INSERT INTO `captcha_captchastore` VALUES ('223', 'MGNX', 'mgnx', 'bf9b28c64c0940805d013f2a6b38fba914a71f6f', '2016-11-13 12:16:43');
-INSERT INTO `captcha_captchastore` VALUES ('225', 'KYPC', 'kypc', '2d6698aff3049fbb0b70e06245e9011220409a80', '2018-10-16 22:35:35');
-INSERT INTO `captcha_captchastore` VALUES ('226', 'VQTN', 'vqtn', '244d655ca05fcb8d7df56e79c7c7099b46368e36', '2018-10-16 22:39:06');
+INSERT INTO `captcha_captchastore` VALUES ('234', 'VCFG', 'vcfg', '4ca8cd7644cf43fb48924a8e5920bf9870c3e757', '2018-10-17 13:16:20');
+INSERT INTO `captcha_captchastore` VALUES ('229', 'KWXL', 'kwxl', '2204ff9a21c1a8c5eb61bf11b68cb4217d5462a0', '2018-10-17 10:29:12');
+INSERT INTO `captcha_captchastore` VALUES ('230', 'OWVI', 'owvi', '9939f87319c7667b8d51e05364f882b3f259c049', '2018-10-17 10:29:14');
+INSERT INTO `captcha_captchastore` VALUES ('231', 'GJJG', 'gjjg', 'c9307de3b1194714ef4692bbc8cb6e1a6ad9781c', '2018-10-17 10:32:03');
+INSERT INTO `captcha_captchastore` VALUES ('232', 'AJSS', 'ajss', '4e558bdc9ac8b8e46c3bd9c58e68cc5b5e40d9a9', '2018-10-17 10:32:52');
 
 -- ----------------------------
 -- Table structure for `courses_course`
@@ -295,12 +296,12 @@ INSERT INTO `courses_course` VALUES ('4', 'java入门2', 'java入门2', 'java入
 INSERT INTO `courses_course` VALUES ('5', 'java入门3', 'java入门3', 'java入门3\r\njava入门3\r\njava入门3\r\njava入门3\r\njava入门3', 'cj', '0', '1', '0', 'courses/2018/09/57035ff200014b8a06000338-240-135_0nFiBSI.jpg', '1', '2018-09-12 22:40:00', '6', '后端开发', '', null, '', '', '0');
 INSERT INTO `courses_course` VALUES ('6', 'python入门2', 'python入门2', 'python入门2\r\npython入门2\r\npython入门2\r\npython入门2\r\npython入门2\r\npython入门2', 'zj', '0', '0', '0', 'courses/2018/09/540e57300001d6d906000338-240-135_MSIqfvw.jpg', '0', '2018-09-12 22:42:00', '10', '后端开发', '', null, '', '', '0');
 INSERT INTO `courses_course` VALUES ('7', 'django与vuejs实战项目', 'python入门2', '<p>&nbsp; &nbsp; python入门2\r\npython入门2\r\npython入门2\r\npython入门2\r\npython入门2</p>', 'zj', '0', '2', '0', 'courses/2018/09/540e57300001d6d906000338-240-135_Z3HIQ2t.jpg', '7', '2018-09-12 23:40:00', '2', '后端开发', '前端开发', null, 'go语言', '前端开发', '1');
-INSERT INTO `courses_course` VALUES ('8', 'django实战项目', 'django实战项目', 'django实战项目\r\ndjango实战项目\r\ndjango实战项目\r\ndjango实战项目\r\ndjango实战项目\r\ndjango实战项目', 'zj', '0', '0', '0', 'courses/2018/09/540e57300001d6d906000338-240-135_mvvGYHL.jpg', '1', '2018-09-12 23:44:00', '1', '后端开发', 'python', null, '', '', '0');
+INSERT INTO `courses_course` VALUES ('8', 'django实战项目', 'django实战项目', 'django实战项目\r\ndjango实战项目\r\ndjango实战项目\r\ndjango实战项目\r\ndjango实战项目\r\ndjango实战项目', 'zj', '0', '0', '0', 'courses/2018/09/540e57300001d6d906000338-240-135_mvvGYHL.jpg', '2', '2018-09-12 23:44:00', '1', '后端开发', 'python', null, '', '', '0');
 INSERT INTO `courses_course` VALUES ('9', 'go语言入门', 'django实战项目', 'django实战项目\r\ndjango实战项目\r\ndjango实战项目\r\ndjango实战项目', 'zj', '0', '1', '0', 'courses/2018/09/540e57300001d6d906000338-240-135_wH52IED.jpg', '13', '2018-09-12 23:45:00', '2', '后端开发', 'go语言', null, 'go语言', 'go语言', '1');
-INSERT INTO `courses_course` VALUES ('10', 'django与vuejs实战项目2', 'django与vuejs实战项目', '<p>&nbsp; &nbsp; django与vuejs实战项目</p><p><img src=\"/media/courses/ueditor/aobama_20161113225044_773.png\" title=\"\" alt=\"aobama.png\"/> </p><table><tbody><tr class=\"firstRow\"><td style=\"word-break: break-all;\" width=\"53\" valign=\"top\">课程</td><td style=\"word-break: break-all;\" width=\"53\" valign=\"top\">课时<br/> </td><td style=\"word-break: break-all;\" width=\"53\" valign=\"top\">难度<br/> </td><td style=\"word-break: break-all;\" width=\"53\" valign=\"top\">时长<br/> </td><td style=\"word-break: break-all;\" width=\"53\" valign=\"top\">学习人数<br/> </td><td style=\"word-break: break-all;\" width=\"53\" valign=\"top\">点击数<br/> </td><td style=\"word-break: break-all;\" width=\"53\" valign=\"top\">点击数</td><td style=\"word-break: break-all;\" width=\"53\" valign=\"top\">点击数</td></tr><tr><td style=\"word-break: break-all;\" width=\"53\" valign=\"top\">django开发<br/> </td><td style=\"word-break: break-all;\" width=\"53\" valign=\"top\">20<br/> </td><td style=\"word-break: break-all;\" width=\"53\" valign=\"top\">中级<br/> </td><td style=\"word-break: break-all;\" width=\"53\" valign=\"top\">30<br/> </td><td style=\"word-break: break-all;\" width=\"53\" valign=\"top\">100000<br/> </td><td style=\"word-break: break-all;\" width=\"53\" valign=\"top\">100000<br/> </td><td style=\"word-break: break-all;\" width=\"53\" valign=\"top\">100000<br/> </td><td style=\"word-break: break-all;\" width=\"53\" valign=\"top\">100000<br/> </td></tr><tr><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td></tr><tr><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td></tr><tr><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td></tr><tr><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td></tr></tbody></table><p><br/> </p><p><img src=\"http://img.baidu.com/hi/jx2/j_0025.gif\"/> </p><p><br/> </p><h1 class=\"ue_t\" label=\"Title center\" name=\"tc\" style=\"border-bottom-color:#cccccc;border-bottom-width:2px;border-bottom-style:solid;padding:0px 4px 0px 0px;text-align:center;margin:0px 0px 20px;\"><span style=\"color:#c0504d;\">[键入文档标题]</span></h1><p style=\"text-align:center;\"><strong class=\"ue_t\">[键入文档副标题]</strong></p><h3><span class=\"ue_t\" style=\"font-family:幼圆\">[标题 1]</span></h3><p class=\"ue_t\" style=\"text-indent:2em;\">对于“插入”选项卡上的库，在设计时都充分考虑了其中的项与文档整体外观的协调性。 您可以使用这些库来插入表格、页眉、页脚、列表、封面以及其他文档构建基块。 您创建的图片、图表或关系图也将与当前的文档外观协调一致。</p><p class=\"ue_t\" style=\"text-indent:2em;\"><img src=\"http://127.0.0.1:8000/media/courses/ueditor/57aa86a0000145c512000460_20161210234050_865.jpg\" title=\"\" alt=\"57aa86a0000145c512000460.jpg\"/> </p><h3><span class=\"ue_t\" style=\"font-family:幼圆\">[标题 2]</span></h3><p><img src=\"http://api.map.baidu.com/staticimage?center=116.410899,39.863624&zoom=11&width=530&height=340&markers=116.404,39.915\" width=\"530\" height=\"340\"/> </p><p class=\"ue_t\" style=\"text-indent:2em;\">在“开始”选项卡上，通过从快速样式库中为所选文本选择一种外观，您可以方便地更改文档中所选文本的格式。 您还可以使用“开始”选项卡上的其他控件来直接设置文本格式。大多数控件都允许您选择是使用当前主题外观，还是使用某种直接指定的格式。</p><h3><span class=\"ue_t\" style=\"font-family:幼圆\">[标题 3]</span></h3><p>2016-12-10</p><p class=\"ue_t\">对于“插入”选项卡上的库，在设计时都充分考虑了其中的项与文档整体外观的协调性。 您可以使用这些库来插入表格、页眉、页脚、列表、封面以及其他文档构建基块。 您创建的图片、图表或关系图也将与当前的文档外观协调一致。</p><p><br/> </p>', 'gj', '0', '10', '0', 'courses/2018/09/540e57300001d6d906000338-240-135_n0L8vbw.jpg', '102', '2018-09-12 23:49:00', '2', '后端开发', 'python', '1', 'django的进阶开发', 'python基础你需要有', '0');
-INSERT INTO `courses_course` VALUES ('11', '前端开发', '前端开发', '前端开发', 'cj', '0', '0', '0', 'courses/2018/09/default_middile_1.png', '3', '2018-09-12 23:52:00', '1', '后端开发', '前端开发', '2', '前端开发', '前端开发', '0');
-INSERT INTO `courses_course` VALUES ('12', 'scrapy教程', 'scrapy教程scrapy教程scrapy教程scrapy教程scrapy教程scrapy教程', '<h1 class=\"ue_t\" label=\"Title center\" name=\"tc\" style=\"border-bottom-color:#cccccc;border-bottom-width:2px;border-bottom-style:solid;padding:0px 4px 0px 0px;text-align:center;margin:0px 0px 20px;\"><span style=\"color:#c0504d;\">[键入文档标题]</span></h1><p style=\"text-align:center;\"><strong class=\"ue_t\">[键入文档副标题]</strong></p><h3><span class=\"ue_t\" style=\"font-family:幼圆\">[标题 1]</span></h3><p class=\"ue_t\" style=\"text-indent:2em;\">对于“插入”选项卡上的库，在设计时都充分考虑了其中的项与文档整体外观的协调性。 您可以使用这些库来插入表格、页眉、页脚、列表、封面以及其他文档构建基块。 您创建的图片、图表或关系图也将与当前的文档外观协调一致。</p><p class=\"ue_t\" style=\"text-indent:2em;\"><img src=\"/media/courses/ueditor/57aa86a0000145c512000460_20161210234050_865.jpg\" title=\"\" alt=\"57aa86a0000145c512000460.jpg\"/> </p><h3><span class=\"ue_t\" style=\"font-family:幼圆\">[标题 2]</span></h3><p><img src=\"http://api.map.baidu.com/staticimage?center=116.410899,39.863624&zoom=11&width=530&height=340&markers=116.404,39.915\" width=\"530\" height=\"340\"/> </p><p class=\"ue_t\" style=\"text-indent:2em;\">在“开始”选项卡上，通过从快速样式库中为所选文本选择一种外观，您可以方便地更改文档中所选文本的格式。 您还可以使用“开始”选项卡上的其他控件来直接设置文本格式。大多数控件都允许您选择是使用当前主题外观，还是使用某种直接指定的格式。</p><h3><span class=\"ue_t\" style=\"font-family:幼圆\">[标题 3]</span></h3><p>2016-12-10</p><p class=\"ue_t\">对于“插入”选项卡上的库，在设计时都充分考虑了其中的项与文档整体外观的协调性。 您可以使用这些库来插入表格、页眉、页脚、列表、封面以及其他文档构建基块。 您创建的图片、图表或关系图也将与当前的文档外观协调一致。</p><p class=\"ue_t\"><br/> </p><p><br/> </p>', 'zj', '55', '0', '1', 'courses/2018/10/57035ff200014b8a06000338-240-135_dHfj8Nq.jpg', '3', '2018-10-10 23:39:00', '2', '后端开发', 'django开发', null, '前端开发', 'django开发', '0');
-INSERT INTO `courses_course` VALUES ('13', 'xadmin进阶开发', 'xadmin进阶开发xadmin进阶开发xadmin进阶开发xadmin进阶开发', '<h1 class=\"ue_t\" label=\"Title center\" name=\"tc\" style=\"border-bottom-color:#cccccc;border-bottom-width:2px;border-bottom-style:solid;padding:0px 4px 0px 0px;text-align:center;margin:0px 0px 20px;\"><span style=\"color:#c0504d;\">[键入文档标题]</span></h1><p style=\"text-align:center;\"><strong class=\"ue_t\">[键入文档副标题]</strong></p><h3><span class=\"ue_t\" style=\"font-family:幼圆\">[标题 1]</span></h3><p class=\"ue_t\" style=\"text-indent:2em;\">对于“插入”选项卡上的库，在设计时都充分考虑了其中的项与文档整体外观的协调性。 您可以使用这些库来插入表格、页眉、页脚、列表、封面以及其他文档构建基块。 您创建的图片、图表或关系图也将与当前的文档外观协调一致。</p><p class=\"ue_t\" style=\"text-indent:2em;\"><img src=\"http://127.0.0.1:8000/media/courses/ueditor/57aa86a0000145c512000460_20161210234050_865.jpg\" title=\"\" alt=\"57aa86a0000145c512000460.jpg\"/> </p><h3><span class=\"ue_t\" style=\"font-family:幼圆\">[标题 2]</span></h3><p><img src=\"http://api.map.baidu.com/staticimage?center=116.410899,39.863624&zoom=11&width=530&height=340&markers=116.404,39.915\" width=\"530\" height=\"340\"/> </p><p class=\"ue_t\" style=\"text-indent:2em;\">在“开始”选项卡上，通过从快速样式库中为所选文本选择一种外观，您可以方便地更改文档中所选文本的格式。 您还可以使用“开始”选项卡上的其他控件来直接设置文本格式。大多数控件都允许您选择是使用当前主题外观，还是使用某种直接指定的格式。</p><h3><span class=\"ue_t\" style=\"font-family:幼圆\">[标题 3]</span></h3><p>2016-12-10</p><p class=\"ue_t\">对于“插入”选项卡上的库，在设计时都充分考虑了其中的项与文档整体外观的协调性。 您可以使用这些库来插入表格、页眉、页脚、列表、封面以及其他文档构建基块。 您创建的图片、图表或关系图也将与当前的文档外观协调一致。</p><p class=\"ue_t\"><br/> </p><p><br/></p>', 'zj', '30', '1', '1', 'courses/2018/10/mysql.jpg', '4', '2018-10-10 23:39:00', '1', '后端开发', 'django开发', '1', 'django开发', 'django开发', '0');
+INSERT INTO `courses_course` VALUES ('10', 'django与vuejs实战项目2', 'django与vuejs实战项目', '<p>&nbsp; &nbsp; django与vuejs实战项目</p><p><img src=\"/media/courses/ueditor/aobama_20161113225044_773.png\" title=\"\" alt=\"aobama.png\"/> </p><table><tbody><tr class=\"firstRow\"><td style=\"word-break: break-all;\" width=\"53\" valign=\"top\">课程</td><td style=\"word-break: break-all;\" width=\"53\" valign=\"top\">课时<br/> </td><td style=\"word-break: break-all;\" width=\"53\" valign=\"top\">难度<br/> </td><td style=\"word-break: break-all;\" width=\"53\" valign=\"top\">时长<br/> </td><td style=\"word-break: break-all;\" width=\"53\" valign=\"top\">学习人数<br/> </td><td style=\"word-break: break-all;\" width=\"53\" valign=\"top\">点击数<br/> </td><td style=\"word-break: break-all;\" width=\"53\" valign=\"top\">点击数</td><td style=\"word-break: break-all;\" width=\"53\" valign=\"top\">点击数</td></tr><tr><td style=\"word-break: break-all;\" width=\"53\" valign=\"top\">django开发<br/> </td><td style=\"word-break: break-all;\" width=\"53\" valign=\"top\">20<br/> </td><td style=\"word-break: break-all;\" width=\"53\" valign=\"top\">中级<br/> </td><td style=\"word-break: break-all;\" width=\"53\" valign=\"top\">30<br/> </td><td style=\"word-break: break-all;\" width=\"53\" valign=\"top\">100000<br/> </td><td style=\"word-break: break-all;\" width=\"53\" valign=\"top\">100000<br/> </td><td style=\"word-break: break-all;\" width=\"53\" valign=\"top\">100000<br/> </td><td style=\"word-break: break-all;\" width=\"53\" valign=\"top\">100000<br/> </td></tr><tr><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td></tr><tr><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td></tr><tr><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td></tr><tr><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td><td width=\"53\" valign=\"top\"><br/> </td></tr></tbody></table><p><br/> </p><p><img src=\"http://img.baidu.com/hi/jx2/j_0025.gif\"/> </p><p><br/> </p><h1 class=\"ue_t\" label=\"Title center\" name=\"tc\" style=\"border-bottom-color:#cccccc;border-bottom-width:2px;border-bottom-style:solid;padding:0px 4px 0px 0px;text-align:center;margin:0px 0px 20px;\"><span style=\"color:#c0504d;\">[键入文档标题]</span></h1><p style=\"text-align:center;\"><strong class=\"ue_t\">[键入文档副标题]</strong></p><h3><span class=\"ue_t\" style=\"font-family:幼圆\">[标题 1]</span></h3><p class=\"ue_t\" style=\"text-indent:2em;\">对于“插入”选项卡上的库，在设计时都充分考虑了其中的项与文档整体外观的协调性。 您可以使用这些库来插入表格、页眉、页脚、列表、封面以及其他文档构建基块。 您创建的图片、图表或关系图也将与当前的文档外观协调一致。</p><p class=\"ue_t\" style=\"text-indent:2em;\"><img src=\"http://127.0.0.1:8000/media/courses/ueditor/57aa86a0000145c512000460_20161210234050_865.jpg\" title=\"\" alt=\"57aa86a0000145c512000460.jpg\"/> </p><h3><span class=\"ue_t\" style=\"font-family:幼圆\">[标题 2]</span></h3><p><img src=\"http://api.map.baidu.com/staticimage?center=116.410899,39.863624&zoom=11&width=530&height=340&markers=116.404,39.915\" width=\"530\" height=\"340\"/> </p><p class=\"ue_t\" style=\"text-indent:2em;\">在“开始”选项卡上，通过从快速样式库中为所选文本选择一种外观，您可以方便地更改文档中所选文本的格式。 您还可以使用“开始”选项卡上的其他控件来直接设置文本格式。大多数控件都允许您选择是使用当前主题外观，还是使用某种直接指定的格式。</p><h3><span class=\"ue_t\" style=\"font-family:幼圆\">[标题 3]</span></h3><p>2016-12-10</p><p class=\"ue_t\">对于“插入”选项卡上的库，在设计时都充分考虑了其中的项与文档整体外观的协调性。 您可以使用这些库来插入表格、页眉、页脚、列表、封面以及其他文档构建基块。 您创建的图片、图表或关系图也将与当前的文档外观协调一致。</p><p><br/> </p>', 'gj', '0', '18', '0', 'courses/2018/09/540e57300001d6d906000338-240-135_n0L8vbw.jpg', '104', '2018-09-12 23:49:00', '2', '后端开发', 'python', '1', 'django的进阶开发', 'python基础你需要有', '0');
+INSERT INTO `courses_course` VALUES ('11', '前端开发', '前端开发', '前端开发', 'cj', '0', '1', '0', 'courses/2018/09/default_middile_1.png', '5', '2018-09-12 23:52:00', '1', '后端开发', '前端开发', '2', '前端开发', '前端开发', '0');
+INSERT INTO `courses_course` VALUES ('12', 'scrapy教程', 'scrapy教程scrapy教程scrapy教程scrapy教程scrapy教程scrapy教程', '<h1 class=\"ue_t\" label=\"Title center\" name=\"tc\" style=\"border-bottom-color:#cccccc;border-bottom-width:2px;border-bottom-style:solid;padding:0px 4px 0px 0px;text-align:center;margin:0px 0px 20px;\"><span style=\"color:#c0504d;\">[键入文档标题]</span></h1><p style=\"text-align:center;\"><strong class=\"ue_t\">[键入文档副标题]</strong></p><h3><span class=\"ue_t\" style=\"font-family:幼圆\">[标题 1]</span></h3><p class=\"ue_t\" style=\"text-indent:2em;\">对于“插入”选项卡上的库，在设计时都充分考虑了其中的项与文档整体外观的协调性。 您可以使用这些库来插入表格、页眉、页脚、列表、封面以及其他文档构建基块。 您创建的图片、图表或关系图也将与当前的文档外观协调一致。</p><p class=\"ue_t\" style=\"text-indent:2em;\"><img src=\"/media/courses/ueditor/57aa86a0000145c512000460_20161210234050_865.jpg\" title=\"\" alt=\"57aa86a0000145c512000460.jpg\"/> </p><h3><span class=\"ue_t\" style=\"font-family:幼圆\">[标题 2]</span></h3><p><img src=\"http://api.map.baidu.com/staticimage?center=116.410899,39.863624&zoom=11&width=530&height=340&markers=116.404,39.915\" width=\"530\" height=\"340\"/> </p><p class=\"ue_t\" style=\"text-indent:2em;\">在“开始”选项卡上，通过从快速样式库中为所选文本选择一种外观，您可以方便地更改文档中所选文本的格式。 您还可以使用“开始”选项卡上的其他控件来直接设置文本格式。大多数控件都允许您选择是使用当前主题外观，还是使用某种直接指定的格式。</p><h3><span class=\"ue_t\" style=\"font-family:幼圆\">[标题 3]</span></h3><p>2016-12-10</p><p class=\"ue_t\">对于“插入”选项卡上的库，在设计时都充分考虑了其中的项与文档整体外观的协调性。 您可以使用这些库来插入表格、页眉、页脚、列表、封面以及其他文档构建基块。 您创建的图片、图表或关系图也将与当前的文档外观协调一致。</p><p class=\"ue_t\"><br/> </p><p><br/> </p>', 'zj', '55', '1', '1', 'courses/2018/10/57035ff200014b8a06000338-240-135_dHfj8Nq.jpg', '5', '2018-10-10 23:39:00', '2', '后端开发', 'django开发', null, '前端开发', 'django开发', '0');
+INSERT INTO `courses_course` VALUES ('13', 'xadmin进阶开发', 'xadmin进阶开发xadmin进阶开发xadmin进阶开发xadmin进阶开发', '<h1 class=\"ue_t\" label=\"Title center\" name=\"tc\" style=\"border-bottom-color:#cccccc;border-bottom-width:2px;border-bottom-style:solid;padding:0px 4px 0px 0px;text-align:center;margin:0px 0px 20px;\"><span style=\"color:#c0504d;\">[键入文档标题]</span></h1><p style=\"text-align:center;\"><strong class=\"ue_t\">[键入文档副标题]</strong></p><h3><span class=\"ue_t\" style=\"font-family:幼圆\">[标题 1]</span></h3><p class=\"ue_t\" style=\"text-indent:2em;\">对于“插入”选项卡上的库，在设计时都充分考虑了其中的项与文档整体外观的协调性。 您可以使用这些库来插入表格、页眉、页脚、列表、封面以及其他文档构建基块。 您创建的图片、图表或关系图也将与当前的文档外观协调一致。</p><p class=\"ue_t\" style=\"text-indent:2em;\"><img src=\"http://127.0.0.1:8000/media/courses/ueditor/57aa86a0000145c512000460_20161210234050_865.jpg\" title=\"\" alt=\"57aa86a0000145c512000460.jpg\"/> </p><h3><span class=\"ue_t\" style=\"font-family:幼圆\">[标题 2]</span></h3><p><img src=\"http://api.map.baidu.com/staticimage?center=116.410899,39.863624&zoom=11&width=530&height=340&markers=116.404,39.915\" width=\"530\" height=\"340\"/> </p><p class=\"ue_t\" style=\"text-indent:2em;\">在“开始”选项卡上，通过从快速样式库中为所选文本选择一种外观，您可以方便地更改文档中所选文本的格式。 您还可以使用“开始”选项卡上的其他控件来直接设置文本格式。大多数控件都允许您选择是使用当前主题外观，还是使用某种直接指定的格式。</p><h3><span class=\"ue_t\" style=\"font-family:幼圆\">[标题 3]</span></h3><p>2016-12-10</p><p class=\"ue_t\">对于“插入”选项卡上的库，在设计时都充分考虑了其中的项与文档整体外观的协调性。 您可以使用这些库来插入表格、页眉、页脚、列表、封面以及其他文档构建基块。 您创建的图片、图表或关系图也将与当前的文档外观协调一致。</p><p class=\"ue_t\"><br/> </p><p><br/></p>', 'zj', '30', '3', '1', 'courses/2018/10/mysql.jpg', '6', '2018-10-10 23:39:00', '1', '后端开发', 'django开发', '1', 'django开发', 'django开发', '0');
 
 -- ----------------------------
 -- Table structure for `courses_courseresource`
@@ -367,20 +368,20 @@ CREATE TABLE `courses_video` (
 -- ----------------------------
 -- Records of courses_video
 -- ----------------------------
-INSERT INTO `courses_video` VALUES ('1', '1.1 hello world', '2016-11-05 21:59:00', '2', 'http://pgq0mpsl7.bkt.clouddn.com/6.blv', '0');
-INSERT INTO `courses_video` VALUES ('2', '1.2 基本概念', '2016-11-05 22:02:00', '2', 'http://pgq0mpsl7.bkt.clouddn.com/6.blv', '0');
-INSERT INTO `courses_video` VALUES ('3', '2.1 test', '2016-11-05 22:02:00', '3', 'http://pgq0mpsl7.bkt.clouddn.com/6.blv', '0');
-INSERT INTO `courses_video` VALUES ('4', '2.2 test2', '2016-11-05 22:02:00', '3', 'http://pgq0mpsl7.bkt.clouddn.com/6.blv', '0');
-INSERT INTO `courses_video` VALUES ('5', 'django settings.py 配置', '2016-12-10 23:35:00', '2', 'http://pgq0mpsl7.bkt.clouddn.com/6.blv', '0');
-INSERT INTO `courses_video` VALUES ('6', '3.1 django app设计', '2016-12-11 00:01:00', '7', 'http://pgq0mpsl7.bkt.clouddn.com/6.blv', '0');
-INSERT INTO `courses_video` VALUES ('7', '3.2 django model设计', '2016-12-11 00:02:00', '7', 'http://pgq0mpsl7.bkt.clouddn.com/6.blv', '0');
-INSERT INTO `courses_video` VALUES ('8', '3.3 django users models设计', '2016-12-11 00:02:00', '7', 'http://pgq0mpsl7.bkt.clouddn.com/6.blv', '0');
-INSERT INTO `courses_video` VALUES ('9', '3.4 django course models设计', '2016-12-11 00:02:00', '7', 'http://pgq0mpsl7.bkt.clouddn.com/6.blv', '0');
-INSERT INTO `courses_video` VALUES ('10', '3.5 organization models设计', '2016-12-11 00:02:00', '7', 'http://pgq0mpsl7.bkt.clouddn.com/6.blv', '0');
-INSERT INTO `courses_video` VALUES ('11', '4.1 django settings配置', '2016-12-11 00:03:00', '8', 'http://pgq0mpsl7.bkt.clouddn.com/6.blv', '0');
-INSERT INTO `courses_video` VALUES ('12', '4.2 models设计', '2016-12-11 00:04:00', '8', 'http://pgq0mpsl7.bkt.clouddn.com/6.blv', '20');
-INSERT INTO `courses_video` VALUES ('13', '5.1 django admin讲解', '2016-12-11 00:05:00', '9', 'http://pgq0mpsl7.bkt.clouddn.com/6.blv', '10');
-INSERT INTO `courses_video` VALUES ('14', '5.2 xadmin的安装和注册', '2016-12-11 00:05:00', '9', 'http://pgq0mpsl7.bkt.clouddn.com/6.blv', '0');
+INSERT INTO `courses_video` VALUES ('1', '1.1 hello world', '2016-11-05 21:59:00', '2', 'http://pgq0mpsl7.bkt.clouddn.com/Print&input%E4%B8%8E%E5%8F%98%E9%87%8F%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A603.mp4', '0');
+INSERT INTO `courses_video` VALUES ('2', '1.2 基本概念', '2016-11-05 22:02:00', '2', 'http://pgq0mpsl7.bkt.clouddn.com/Print&input%E4%B8%8E%E5%8F%98%E9%87%8F%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A603.mp4', '0');
+INSERT INTO `courses_video` VALUES ('3', '2.1 test', '2016-11-05 22:02:00', '3', 'http://pgq0mpsl7.bkt.clouddn.com/Print&input%E4%B8%8E%E5%8F%98%E9%87%8F%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A603.mp4', '0');
+INSERT INTO `courses_video` VALUES ('4', '2.2 test2', '2016-11-05 22:02:00', '3', 'http://pgq0mpsl7.bkt.clouddn.com/Print&input%E4%B8%8E%E5%8F%98%E9%87%8F%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A603.mp4', '0');
+INSERT INTO `courses_video` VALUES ('5', 'django settings.py 配置', '2016-12-10 23:35:00', '2', 'http://pgq0mpsl7.bkt.clouddn.com/Print&input%E4%B8%8E%E5%8F%98%E9%87%8F%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A603.mp4', '0');
+INSERT INTO `courses_video` VALUES ('6', '3.1 django app设计', '2016-12-11 00:01:00', '7', 'http://pgq0mpsl7.bkt.clouddn.com/Print&input%E4%B8%8E%E5%8F%98%E9%87%8F%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A603.mp4', '0');
+INSERT INTO `courses_video` VALUES ('7', '3.2 django model设计', '2016-12-11 00:02:00', '7', 'http://pgq0mpsl7.bkt.clouddn.com/Print&input%E4%B8%8E%E5%8F%98%E9%87%8F%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A603.mp4', '0');
+INSERT INTO `courses_video` VALUES ('8', '3.3 django users models设计', '2016-12-11 00:02:00', '7', 'http://pgq0mpsl7.bkt.clouddn.com/Print&input%E4%B8%8E%E5%8F%98%E9%87%8F%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A603.mp4', '0');
+INSERT INTO `courses_video` VALUES ('9', '3.4 django course models设计', '2016-12-11 00:02:00', '7', 'http://pgq0mpsl7.bkt.clouddn.com/Print&input%E4%B8%8E%E5%8F%98%E9%87%8F%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A603.mp4', '0');
+INSERT INTO `courses_video` VALUES ('10', '3.5 organization models设计', '2016-12-11 00:02:00', '7', 'http://pgq0mpsl7.bkt.clouddn.com/Print&input%E4%B8%8E%E5%8F%98%E9%87%8F%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A603.mp4', '0');
+INSERT INTO `courses_video` VALUES ('11', '4.1 django settings配置', '2016-12-11 00:03:00', '8', 'http://pgq0mpsl7.bkt.clouddn.com/Print&input%E4%B8%8E%E5%8F%98%E9%87%8F%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A603.mp4', '0');
+INSERT INTO `courses_video` VALUES ('12', '4.2 models设计', '2016-12-11 00:04:00', '8', 'http://pgq0mpsl7.bkt.clouddn.com/Print&input%E4%B8%8E%E5%8F%98%E9%87%8F%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A603.mp4', '20');
+INSERT INTO `courses_video` VALUES ('13', '5.1 django admin讲解', '2016-12-11 00:05:00', '9', 'http://pgq0mpsl7.bkt.clouddn.com/Print&input%E4%B8%8E%E5%8F%98%E9%87%8F%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A603.mp4', '10');
+INSERT INTO `courses_video` VALUES ('14', '5.2 xadmin的安装和注册', '2016-12-11 00:05:00', '9', 'http://pgq0mpsl7.bkt.clouddn.com/Print&input%E4%B8%8E%E5%8F%98%E9%87%8F%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A603.mp4', '0');
 
 -- ----------------------------
 -- Table structure for `django_admin_log`
@@ -457,7 +458,7 @@ CREATE TABLE `django_migrations` (
   `name` varchar(255) NOT NULL,
   `applied` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=69 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=72 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of django_migrations
@@ -506,6 +507,9 @@ INSERT INTO `django_migrations` VALUES ('53', 'courses', '0012_auto_20161113_172
 INSERT INTO `django_migrations` VALUES ('54', 'courses', '0013_remove_course_detail2', '2016-11-13 21:03:02');
 INSERT INTO `django_migrations` VALUES ('55', 'courses', '0014_auto_20161113_2218', '2016-11-13 22:18:55');
 INSERT INTO `django_migrations` VALUES ('56', 'organization', '0008_auto_20161210_2353', '2016-12-10 23:53:24');
+INSERT INTO `django_migrations` VALUES ('69', 'auth', '0008_alter_user_username_max_length', '2018-10-17 11:33:37');
+INSERT INTO `django_migrations` VALUES ('70', 'auth', '0009_alter_user_last_name_max_length', '2018-10-17 11:33:37');
+INSERT INTO `django_migrations` VALUES ('71', 'users', '0006_auto_20181017_1133', '2018-10-17 11:33:37');
 
 -- ----------------------------
 -- Table structure for `django_session`
@@ -586,7 +590,7 @@ CREATE TABLE `operation_usercourse` (
   PRIMARY KEY (`id`),
   KEY `operation_usercourse_ea134da7` (`course_id`),
   KEY `operation_usercourse_e8701ad4` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of operation_usercourse
@@ -598,6 +602,10 @@ INSERT INTO `operation_usercourse` VALUES ('4', '2016-11-05 23:47:04', '1', '2')
 INSERT INTO `operation_usercourse` VALUES ('5', '2016-12-08 22:06:35', '5', '2');
 INSERT INTO `operation_usercourse` VALUES ('6', '2016-12-08 22:09:54', '9', '2');
 INSERT INTO `operation_usercourse` VALUES ('7', '2016-12-10 23:57:08', '13', '2');
+INSERT INTO `operation_usercourse` VALUES ('8', '2018-10-17 10:34:00', '11', '8');
+INSERT INTO `operation_usercourse` VALUES ('9', '2018-10-17 10:34:13', '13', '8');
+INSERT INTO `operation_usercourse` VALUES ('10', '2018-10-17 10:34:28', '10', '8');
+INSERT INTO `operation_usercourse` VALUES ('11', '2018-10-17 11:31:04', '12', '8');
 
 -- ----------------------------
 -- Table structure for `operation_userfavorite`
@@ -634,12 +642,13 @@ CREATE TABLE `operation_usermessage` (
   `has_read` tinyint(1) NOT NULL,
   `add_time` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of operation_usermessage
 -- ----------------------------
 INSERT INTO `operation_usermessage` VALUES ('1', '2', '欢迎注册', '1', '2016-11-06 23:49:00');
+INSERT INTO `operation_usermessage` VALUES ('2', '8', '欢迎注册ai慕学在线网', '1', '2018-10-17 10:28:28');
 
 -- ----------------------------
 -- Table structure for `organization_citydict`
@@ -764,7 +773,7 @@ CREATE TABLE `users_emailverifyrecord` (
   `send_type` varchar(30) NOT NULL,
   `send_time` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of users_emailverifyrecord
@@ -779,6 +788,7 @@ INSERT INTO `users_emailverifyrecord` VALUES ('13', '73gYZCG4NID3hBIk', 'project
 INSERT INTO `users_emailverifyrecord` VALUES ('14', 'KIjhoogFyi8xu4TB', 'projectsedu@sina.com', 'update_ema', '2016-11-06 19:46:49');
 INSERT INTO `users_emailverifyrecord` VALUES ('15', 'xrHe', 'projectsedu@sina.com', 'update_email', '2016-11-06 19:50:45');
 INSERT INTO `users_emailverifyrecord` VALUES ('16', 'jCeSMseZ58DeGPDx', 'projectsedu@sina.com', 'forget', '2016-11-08 22:39:08');
+INSERT INTO `users_emailverifyrecord` VALUES ('17', '3d3duM4YzIzGf9wT', 'small_pupil@126.com', 'register', '2018-10-17 10:28:28');
 
 -- ----------------------------
 -- Table structure for `users_userprofile`
@@ -789,9 +799,9 @@ CREATE TABLE `users_userprofile` (
   `password` varchar(128) NOT NULL,
   `last_login` datetime DEFAULT NULL,
   `is_superuser` tinyint(1) NOT NULL,
-  `username` varchar(30) NOT NULL,
+  `username` varchar(150) NOT NULL,
   `first_name` varchar(30) NOT NULL,
-  `last_name` varchar(30) NOT NULL,
+  `last_name` varchar(150) NOT NULL,
   `email` varchar(254) NOT NULL,
   `is_staff` tinyint(1) NOT NULL,
   `is_active` tinyint(1) NOT NULL,
@@ -804,14 +814,12 @@ CREATE TABLE `users_userprofile` (
   `image` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of users_userprofile
 -- ----------------------------
-INSERT INTO `users_userprofile` VALUES ('2', 'pbkdf2_sha256$24000$F1yNeo5gRaWI$6TxfkDeHwc0X25DLCBI8O5W7exiud1Zz9FW8xtrPHSE=', '2016-12-11 22:42:34', '1', 'bobby', '', '', 'projectsedu@sina.com', '1', '1', '2016-10-24 14:58:33', 'django', '2009-09-02', 'female', '我来自火星', '', 'image/2016/12/default_big_14.png');
-INSERT INTO `users_userprofile` VALUES ('3', 'admin123', '2016-10-30 23:40:00', '0', 'bobby1', '', '', '', '0', '1', '2016-10-24 23:40:00', 'bobby', '2016-10-05', 'female', '慕课网', '', 'image/default.png');
-INSERT INTO `users_userprofile` VALUES ('6', 'pbkdf2_sha256$24000$fqNxJK7sfjE4$pcomeAWpo2AQtFIYq68wpqWszR+FMquouz731Xnc4q4=', '2016-11-08 22:44:00', '0', 'projectsedu1@sina.com', '', '', 'projectsedu1@sina.com', '1', '1', '2016-10-30 23:01:00', 'projectsedu', null, 'female', '北京市', '', 'image/default.png');
+INSERT INTO `users_userprofile` VALUES ('9', 'pbkdf2_sha256$100000$FuwRJbm7JmhU$CYKhDAeZ563YXNTSltWcJ5q5Ti38nsELGjyOG+jEdzk=', '2018-10-17 11:34:53', '1', 'rcw', '', '', 'small_pupil@126.com', '1', '1', '2018-10-17 11:33:16', '', null, 'female', '', null, 'image/default.png');
 
 -- ----------------------------
 -- Table structure for `users_userprofile_groups`
@@ -903,12 +911,13 @@ CREATE TABLE `xadmin_usersettings` (
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `xadmin_usersettings_user_id_edeabe4a_fk_users_userprofile_id` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of xadmin_usersettings
 -- ----------------------------
 INSERT INTO `xadmin_usersettings` VALUES ('1', 'dashboard:home:pos', '', '2');
+INSERT INTO `xadmin_usersettings` VALUES ('2', 'dashboard:home:pos', '', '9');
 
 -- ----------------------------
 -- Table structure for `xadmin_userwidget`
