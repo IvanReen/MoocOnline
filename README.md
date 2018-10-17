@@ -46,3 +46,10 @@ create database mooconline charset='utf8';
 6. python manage.py runserver
 
 7. 浏览器中输入 127.0.0.1:8000访问
+## 求打赏鼓励
+
+很高兴我的项目代码对你有帮助，请我吃包辣条吧！
+
+微信打赏:
+
+![mark](\static\images\code.jpg)
