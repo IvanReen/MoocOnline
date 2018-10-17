@@ -41,11 +41,11 @@
 				<form class="perinform" id="jsEditUserForm" autocomplete="off">
 					<ul class="right">
 						<li>昵&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称：
-                           <input type="text" name="nick_name" id="nick_name" value="{{ request.user.nick_name }}" maxlength="10">
+                           <input type="text" name="nick_name" id="nick_name" {% if request.user.nick_name %}value="{{ request.user.nick_name }}" {% endif %} maxlength="10">
                             <i class="error-tips"></i>
                         </li>
 						<li>生&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日：
-                           <input type="text" id="birth_day" name="birday" value="{{ request.user.birday }}" readonly="readonly"/>
+                           <input type="text" id="birth_day" name="birday" {% if request.user.birday %}value="{{ request.user.birday }}" {% endif %} readonly="readonly"/>
                             <i class="error-tips"></i>
 						</li>
 						<li>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：
@@ -53,14 +53,14 @@
 							<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="gender" value="female" {% if request.user.gender == 'female' %}checked="checked"{% endif %}>女</label>
 						</li>
 						<li class="p_infor_city">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址：
-                            <input type="text" name="address" id="address" placeholder="请输入你的地址" value="{{ request.user.address }}" maxlength="10">
+                            <input type="text" name="address" id="address" placeholder="请输入你的地址" {% if request.user.address %}value="{{ request.user.address }}" {% endif %} maxlength="10">
 						    <i class="error-tips"></i>
                         </li>
 						<li>手&nbsp;&nbsp;机&nbsp;&nbsp;号：
-                            <input type="text" name="mobile" id="mobile" placeholder="请输入你的手机号码" value="{{ request.user.mobile }}" maxlength="10">
+                            <input type="text" name="mobile" id="mobile" placeholder="请输入你的手机号码" {% if request.user.mobile  %} value="{{ request.user.mobile }}" {% endif %} maxlength="10">
                         </li>
                         <li>邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱：
-                        	<input class="borderno" type="text" name="email" readonly="readonly" value="{{ request.user.email }}"/>
+                        	<input class="borderno" type="text" name="email" readonly="readonly" {% if request.user.email %} value="{{ request.user.email }}" {% endif %}/>
                             <span class="green changeemai_btn">[修改]</span>
                     	</li>
 						<li class="button heibtn">

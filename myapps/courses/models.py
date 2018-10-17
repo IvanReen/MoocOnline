@@ -41,7 +41,7 @@ class Course(models.Model):
 
     def go_to(self):
         from django.utils.safestring import mark_safe
-        return mark_safe("<a href='http://www.projectsedu.com'>跳转</>")
+        return mark_safe("<a href='http://www.baidu.com'>跳转</>")
     go_to.short_description = "跳转"
 
     def get_learn_users(self):
@@ -78,6 +78,7 @@ class Lesson(models.Model):
     def get_lesson_video(self):
         #获取章节视频
         return self.video_set.all()
+
 
 class Video(models.Model):
     lesson = models.ForeignKey(Lesson, verbose_name=u"章节", on_delete=models.CASCADE)

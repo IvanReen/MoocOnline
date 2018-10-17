@@ -43,8 +43,8 @@ class BaseSetting(object):
     use_bootswatch = True
 
 class GlobalSettings(object):
-    site_title = "慕学后台管理系统"
-    site_footer = "慕学在线网"
+    site_title = "ai慕学后台管理系统"
+    site_footer = "ai慕学在线网"
     # menu_style = "accordion"
 
 class EmailVerifyRecordAdmin(object):
