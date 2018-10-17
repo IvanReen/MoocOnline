@@ -34,7 +34,7 @@ DATABASES = {
 
 2. 创建数据库
 ```
-create database mooconline charset='utf8';
+$ create database mooconline charset='utf8';
 ```
 
 3. navicat 导入sql文件
@@ -43,9 +43,17 @@ create database mooconline charset='utf8';
 
 5. 然后pip install mysqlclient-1.3.12-cp36-cp36m-win_amd64.whl 安装mysqlclient驱动
 
-6. python manage.py runserver
+6. 创建管理员账户
+```
+$ python manage.py createsuperuser
+```
+7. 收集静态文件
+```
+$ python manage.py collectstatic --noinput
+$ python manage.py runserver
+```
 
-7. 浏览器中输入 127.0.0.1:8000访问
+8. 浏览器中输入 127.0.0.1:8000访问
 ## 求打赏鼓励
 
 很高兴我的项目代码对你有帮助，请我吃包辣条吧！
