@@ -29,7 +29,7 @@
 
 					</div>
 					<div class="des">
-						<h1 title="django 从入门到精通体验开始了">{{ course.name }}</h1>
+						<h1 title="{{ course.name }}">{{ course.name }}</h1>
 						<span class="key">{{ course.desc }}</span>
 						<div class="prize">
 							<span class="fl">难度：<i class="key">{{ course.get_degree_display }}</i></span>
@@ -54,7 +54,7 @@
 					</div>
                     <div class="group-share-box">
                         <div class="bdsharebuttonbox"
-                             data-text="django开始了"
+                             data-text="{{ course.name }}"
                              data-desc="我在#慕课网#发现了"
                              data-comment=""
                              data-url="/group/groupdetail/15/">
@@ -79,7 +79,7 @@
                         </a>
                     </div>
 					<a href="/company/14/">
-                        <h2 class="center" title="清华大学">{{ course.course_org.name }}</h2>
+                        <h2 class="center" title="{{ course.course_org.name }}">{{ course.course_org.name }}</h2>
                     </a>
 					<div class="btn  notlogin
 					     "data-favid="14" id="jsRightBtn">

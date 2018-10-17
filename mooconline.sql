@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2018-10-17 09:46:39
+Date: 2018-10-17 10:00:30
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -367,20 +367,20 @@ CREATE TABLE `courses_video` (
 -- ----------------------------
 -- Records of courses_video
 -- ----------------------------
-INSERT INTO `courses_video` VALUES ('1', '1.1 hello world', '2016-11-05 21:59:00', '2', 'http://www.imooc.com/video/1430', '0');
-INSERT INTO `courses_video` VALUES ('2', '1.2 基本概念', '2016-11-05 22:02:00', '2', 'http://www.imooc.com/video/1430', '0');
-INSERT INTO `courses_video` VALUES ('3', '2.1 test', '2016-11-05 22:02:00', '3', 'http://www.imooc.com/video/1430', '0');
-INSERT INTO `courses_video` VALUES ('4', '2.2 test2', '2016-11-05 22:02:00', '3', 'http://www.imooc.com/video/1430', '0');
-INSERT INTO `courses_video` VALUES ('5', 'django settings.py 配置', '2016-12-10 23:35:00', '2', 'http://imooc.com/', '0');
-INSERT INTO `courses_video` VALUES ('6', '3.1 django app设计', '2016-12-11 00:01:00', '7', 'http://imooc.com/', '0');
-INSERT INTO `courses_video` VALUES ('7', '3.2 django model设计', '2016-12-11 00:02:00', '7', 'http://imooc.com/', '0');
-INSERT INTO `courses_video` VALUES ('8', '3.3 django users models设计', '2016-12-11 00:02:00', '7', 'http://imooc.com/', '0');
-INSERT INTO `courses_video` VALUES ('9', '3.4 django course models设计', '2016-12-11 00:02:00', '7', 'http://imooc.com/', '0');
-INSERT INTO `courses_video` VALUES ('10', '3.5 organization models设计', '2016-12-11 00:02:00', '7', 'http://imooc.com/', '0');
-INSERT INTO `courses_video` VALUES ('11', '4.1 django settings配置', '2016-12-11 00:03:00', '8', 'http://imooc.com/', '0');
-INSERT INTO `courses_video` VALUES ('12', '4.2 models设计', '2016-12-11 00:04:00', '8', 'http://imooc.com/', '20');
-INSERT INTO `courses_video` VALUES ('13', '5.1 django admin讲解', '2016-12-11 00:05:00', '9', 'http://imooc.com/', '10');
-INSERT INTO `courses_video` VALUES ('14', '5.2 xadmin的安装和注册', '2016-12-11 00:05:00', '9', 'http://imooc.com/', '0');
+INSERT INTO `courses_video` VALUES ('1', '1.1 hello world', '2016-11-05 21:59:00', '2', 'http://pgq0mpsl7.bkt.clouddn.com/6.blv', '0');
+INSERT INTO `courses_video` VALUES ('2', '1.2 基本概念', '2016-11-05 22:02:00', '2', 'http://pgq0mpsl7.bkt.clouddn.com/6.blv', '0');
+INSERT INTO `courses_video` VALUES ('3', '2.1 test', '2016-11-05 22:02:00', '3', 'http://pgq0mpsl7.bkt.clouddn.com/6.blv', '0');
+INSERT INTO `courses_video` VALUES ('4', '2.2 test2', '2016-11-05 22:02:00', '3', 'http://pgq0mpsl7.bkt.clouddn.com/6.blv', '0');
+INSERT INTO `courses_video` VALUES ('5', 'django settings.py 配置', '2016-12-10 23:35:00', '2', 'http://pgq0mpsl7.bkt.clouddn.com/6.blv', '0');
+INSERT INTO `courses_video` VALUES ('6', '3.1 django app设计', '2016-12-11 00:01:00', '7', 'http://pgq0mpsl7.bkt.clouddn.com/6.blv', '0');
+INSERT INTO `courses_video` VALUES ('7', '3.2 django model设计', '2016-12-11 00:02:00', '7', 'http://pgq0mpsl7.bkt.clouddn.com/6.blv', '0');
+INSERT INTO `courses_video` VALUES ('8', '3.3 django users models设计', '2016-12-11 00:02:00', '7', 'http://pgq0mpsl7.bkt.clouddn.com/6.blv', '0');
+INSERT INTO `courses_video` VALUES ('9', '3.4 django course models设计', '2016-12-11 00:02:00', '7', 'http://pgq0mpsl7.bkt.clouddn.com/6.blv', '0');
+INSERT INTO `courses_video` VALUES ('10', '3.5 organization models设计', '2016-12-11 00:02:00', '7', 'http://pgq0mpsl7.bkt.clouddn.com/6.blv', '0');
+INSERT INTO `courses_video` VALUES ('11', '4.1 django settings配置', '2016-12-11 00:03:00', '8', 'http://pgq0mpsl7.bkt.clouddn.com/6.blv', '0');
+INSERT INTO `courses_video` VALUES ('12', '4.2 models设计', '2016-12-11 00:04:00', '8', 'http://pgq0mpsl7.bkt.clouddn.com/6.blv', '20');
+INSERT INTO `courses_video` VALUES ('13', '5.1 django admin讲解', '2016-12-11 00:05:00', '9', 'http://pgq0mpsl7.bkt.clouddn.com/6.blv', '10');
+INSERT INTO `courses_video` VALUES ('14', '5.2 xadmin的安装和注册', '2016-12-11 00:05:00', '9', 'http://pgq0mpsl7.bkt.clouddn.com/6.blv', '0');
 
 -- ----------------------------
 -- Table structure for `django_admin_log`

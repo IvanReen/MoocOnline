@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}讲师详情 - 慕学在线网{% endblock %}
+{% block title %}讲师详情 - ai慕学在线网{% endblock %}
 {% load staticfiles %}
 {% block custom_bread %}
     <section>
@@ -28,7 +28,7 @@
                                      {% if has_teacher_faved %}已收藏{% else %}收藏{% endif %}
                                 </span>
                                 <span class="fr btn2 shareBtn bdsharebuttonbox"
-                                      data-text="授课教师-{{ teacher.name }}-慕学网"
+                                      data-text="授课教师-{{ teacher.name }}-ai慕学网"
                                       data-desc="我在#慕课网#发现了"
                                       data-comment="{{ teacher.name }}，工作年限：{{ teacher.work_years }}年；学历：本科；所在公司：{{ teacher.work_company }}&nbsp;；经典案例：{{ teacher.work_company }}"
                                       data-url="/diary/hk_detail/10/">
