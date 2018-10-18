@@ -60,8 +60,8 @@ class VideoPlayView(View):
             user_course = UserCourse(user=request.user, course=course)
             user_course.save()
 
-        user_cousers = UserCourse.objects.filter(course=course)
-        user_ids = [user_couser.user.id for user_couser in user_cousers]
+        # user_cousers = UserCourse.objects.filter(course=course)
+        user_ids = [user_couser.user.id for user_couser in user_courses]
         all_user_courses = UserCourse.objects.filter(user_id__in=user_ids)
         #取出所有课程id
         course_ids = [user_couser.course.id for user_couser in all_user_courses]
@@ -123,11 +123,11 @@ class CourseInfoView(LoginRequiredMixin, View):
         #查询用户是否已经关联了该课程
         user_courses = UserCourse.objects.filter(user=request.user, course=course)
         if not user_courses:
-            user_course = UserCourse(user=request.user, course=course)
+            user_course = UserCourse.objects.filter(user=request.user, course=course)
             user_course.save()
 
-        user_cousers = UserCourse.objects.filter(course=course)
-        user_ids = [user_couser.user.id for user_couser in user_cousers]
+        # user_cousers = UserCourse.objects.filter(user=request.user, course=course)
+        user_ids = [user_couser.user.id for user_couser in user_courses]
         all_user_courses = UserCourse.objects.filter(user_id__in=user_ids)
         #取出所有课程id
         course_ids = [user_couser.course.id for user_couser in all_user_courses]
