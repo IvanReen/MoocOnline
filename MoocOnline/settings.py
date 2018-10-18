@@ -91,13 +91,22 @@ WSGI_APPLICATION = 'MoocOnline.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': "imooc$mooconline",
+#         'USER': 'imooc',
+#         'PASSWORD': "RCWzb1010",
+#         'HOST': "imooc.mysql.pythonanywhere-services.com"
+#     }
+# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': "imooc$mooconline",
-        'USER': 'imooc',
-        'PASSWORD': "RCWzb1010",
-        'HOST': "imooc.mysql.pythonanywhere-services.com"
+        'NAME': "mooconline",
+        'USER': 'root',
+        'PASSWORD': "7890",
+        'HOST': "127.0.0.1"
     }
 }
 

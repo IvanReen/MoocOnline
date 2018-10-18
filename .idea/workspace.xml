@@ -2,16 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="83ec6b2b-fac4-495b-ab9a-e76ad3e44abd" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/collectedstatic/images/footlogo.png" beforeDir="false" afterPath="$PROJECT_DIR$/collectedstatic/images/footlogo.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/collectedstatic/images/logo.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/collectedstatic/images/logo.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/collectedstatic/images/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/collectedstatic/images/logo.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/collectedstatic/images/logo2.png" beforeDir="false" afterPath="$PROJECT_DIR$/collectedstatic/images/logo2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/image/2018/10/code.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/media/image/2018/10/code.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/images/footlogo.png" beforeDir="false" afterPath="$PROJECT_DIR$/static/images/footlogo.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/images/logo.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/static/images/logo.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/images/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/static/images/logo.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/images/logo2.png" beforeDir="false" afterPath="$PROJECT_DIR$/static/images/logo2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MoocOnline/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/MoocOnline/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myext/xadmin/plugins/actions.py" beforeDir="false" afterPath="$PROJECT_DIR$/myext/xadmin/plugins/actions.py" afterDir="false" />
     </list>
     <ignored path="MxOnline.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -42,7 +35,35 @@
     <favorites_list name="MxOnline" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf>
+      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/MoocOnline/settings.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="266">
+              <caret line="108" column="26" selection-start-line="108" selection-start-column="26" selection-end-line="108" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="actions.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/myext/xadmin/plugins/actions.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="205">
+              <caret line="106" selection-start-line="106" selection-end-line="107" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="utils.py" pinned="false" current-in-tab="false">
+        <entry file="file://D:/PythonEnv/mx/Lib/site-packages/django/contrib/admin/utils.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-38">
+              <caret line="121" column="57" selection-start-line="121" selection-start-column="57" selection-end-line="121" selection-end-column="57" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -80,7 +101,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/templates/404.html" />
         <option value="$PROJECT_DIR$/templates/500.html" />
         <option value="$PROJECT_DIR$/apps/users/adminx.py" />
         <option value="$PROJECT_DIR$/extra_apps/xadmin/plugins/auth.py" />
@@ -111,7 +131,6 @@
         <option value="$PROJECT_DIR$/apps/courses/views.py" />
         <option value="$PROJECT_DIR$/apps/organization/views.py" />
         <option value="$PROJECT_DIR$/MxOnline/settings.py" />
-        <option value="$PROJECT_DIR$/MoocOnline/settings.py" />
         <option value="$PROJECT_DIR$/MoocOnline/urls.py" />
         <option value="$PROJECT_DIR$/templates/login.html" />
         <option value="$PROJECT_DIR$/myapps/users/views.py" />
@@ -131,6 +150,8 @@
         <option value="$PROJECT_DIR$/templates/org_base.html" />
         <option value="$PROJECT_DIR$/templates/base.html" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/MoocOnline/settings.py" />
+        <option value="$PROJECT_DIR$/myext/xadmin/plugins/actions.py" />
       </list>
     </option>
   </component>
@@ -143,10 +164,10 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="951" />
-    <option name="width" value="978" />
-    <option name="height" value="1039" />
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="950" />
+    <option name="width" value="980" />
+    <option name="height" value="1040" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -154,7 +175,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -162,10 +182,16 @@
               <item name="MoocOnline" type="b2602c69:ProjectViewProjectNode" />
               <item name="MoocOnline" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="MoocOnline" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MoocOnline" type="462c0819:PsiDirectoryNode" />
+              <item name="MoocOnline" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -297,22 +323,22 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="7" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="7" />
       <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5033512" side_tool="true" weight="0.32956153" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Run" order="3" weight="0.40376106" />
       <window_info anchor="bottom" id="Version Control" order="10" />
       <window_info anchor="bottom" id="Python Console" order="12" />
-      <window_info anchor="bottom" id="Run" order="3" weight="0.40376106" />
-      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.4966488" visible="true" weight="0.42998585" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18096514" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.4966488" visible="true" weight="0.42998585" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1883378" />
       <window_info anchor="bottom" id="Docker" order="9" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" weight="0.3298913" />
       <window_info anchor="right" id="SciView" order="3" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="4" sideWeight="0.49347827" weight="0.4822695" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
       <window_info anchor="bottom" id="manage.py@MxOnline" order="0" weight="0.6682243" />
@@ -358,8 +384,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/extra_apps/xadmin/plugins/__init__.py" />
-    <entry file="file://E:/virtualevn/mxonline/Lib/site-packages/django/apps/registry.py" />
     <entry file="file://E:/virtualevn/mxonline/Lib/site-packages/django/contrib/auth/models.py" />
     <entry file="file://E:/virtualevn/mxonline/Lib/site-packages/django/contrib/auth/base_user.py" />
     <entry file="file://$PROJECT_DIR$/templates/teachers-list.html">
@@ -451,13 +475,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="356">
           <caret line="177" selection-start-line="177" selection-end-line="177" />
-          <folding>
-            <element signature="n#li#0;n#ul#0;n#div#0;n#div#1;n#div#2;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" />
-            <element signature="n#li#1;n#ul#0;n#div#0;n#div#1;n#div#2;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" />
-            <element signature="n#li#2;n#ul#0;n#div#0;n#div#1;n#div#2;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" />
-            <element signature="n#li#3;n#ul#0;n#div#0;n#div#1;n#div#2;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" />
-            <element signature="n#li#4;n#ul#0;n#div#0;n#div#1;n#div#2;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -465,13 +482,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-7835">
           <caret line="70" column="42" selection-start-line="70" selection-start-column="42" selection-end-line="70" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MoocOnline/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="97">
-          <caret line="136" lean-forward="true" selection-start-line="136" selection-end-line="136" />
         </state>
       </provider>
     </entry>
@@ -508,9 +518,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="232">
           <caret line="45" column="38" lean-forward="true" selection-start-line="45" selection-start-column="38" selection-end-line="45" selection-end-column="38" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -574,6 +581,27 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="185">
           <caret line="8" column="29" selection-start-line="8" selection-start-column="29" selection-end-line="8" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MoocOnline/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="108" column="26" selection-start-line="108" selection-start-column="26" selection-end-line="108" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/PythonEnv/mx/Lib/site-packages/django/contrib/admin/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-38">
+          <caret line="121" column="57" selection-start-line="121" selection-start-column="57" selection-end-line="121" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/myext/xadmin/plugins/actions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="205">
+          <caret line="106" selection-start-line="106" selection-end-line="107" />
         </state>
       </provider>
     </entry>
