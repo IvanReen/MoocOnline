@@ -93,11 +93,10 @@ class ResultField(object):
                     self.text = boolean_icon(value)
                 else:
                     self.text = smart_text(value)
+            elif isinstance(f.remote_field, models.ManyToOneRel):
+                self.text = getattr(self.obj, f.name)
             else:
-                if isinstance(f.remote_field, models.ManyToOneRel):
-                    self.text = getattr(self.obj, f.name)
-                else:
-                    self.text = display_for_field(value, f)
+                self.text = display_for_field(value, f)
             self.field = f
             self.attr = attr
             self.value = value
@@ -187,10 +186,7 @@ class DetailAdminView(ModelAdminView):
         Returns a Form class for use in the admin add view. This is used by
         add_view and change_view.
         """
-        if self.exclude is None:
-            exclude = []
-        else:
-            exclude = list(self.exclude)
+        exclude = [] if self.exclude is None else list(self.exclude)
         if self.exclude is None and hasattr(self.form, '_meta') and self.form._meta.exclude:
             # Take the custom ModelForm's Meta.exclude into account only if the
             # ModelAdmin doesn't define its own.
@@ -203,7 +199,7 @@ class DetailAdminView(ModelAdminView):
             "fields": self.fields and list(self.fields) or '__all__',
             "exclude": exclude,
         }
-        defaults.update(kwargs)
+        defaults |= kwargs
         return modelform_factory(self.model, **defaults)
 
     @filter_hook
@@ -223,8 +219,7 @@ class DetailAdminView(ModelAdminView):
     def get(self, request, *args, **kwargs):
         form = self.get_model_form()
         self.form_obj = form(instance=self.obj)
-        helper = self.get_form_helper()
-        if helper:
+        if helper := self.get_form_helper():
             self.form_obj.helper = helper
 
         return self.get_response()
@@ -270,10 +265,12 @@ class DetailAdminView(ModelAdminView):
         context = self.get_context()
         context.update(kwargs or {})
         self.request.current_app = self.admin_site.name
-        response = TemplateResponse(self.request, self.detail_template or
-                                    self.get_template_list('views/model_detail.html'),
-                                    context)
-        return response
+        return TemplateResponse(
+            self.request,
+            self.detail_template
+            or self.get_template_list('views/model_detail.html'),
+            context,
+        )
 
 
 class DetailAdminUtil(DetailAdminView):

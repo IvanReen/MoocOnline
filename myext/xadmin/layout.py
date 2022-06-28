@@ -30,7 +30,7 @@ class Row(layout.Div):
         if not (isinstance(f, Field) or issubclass(f.__class__, Field)):
             f = layout.Field(f)
         if f.wrapper_class:
-            f.wrapper_class += " %s" % col_class
+            f.wrapper_class += f" {col_class}"
         else:
             f.wrapper_class = col_class
         return f

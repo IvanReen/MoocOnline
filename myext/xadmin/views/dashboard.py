@@ -38,9 +38,8 @@ class WidgetTypeSelect(forms.Widget):
             value = ''
         final_attrs = self.build_attrs(attrs, extra_attrs={'name': name})
         final_attrs['class'] = 'nav nav-pills nav-stacked'
-        output = [u'<ul%s>' % flatatt(final_attrs)]
-        options = self.render_options(force_text(value), final_attrs['id'])
-        if options:
+        output = [f'<ul{flatatt(final_attrs)}>']
+        if options := self.render_options(force_text(value), final_attrs['id']):
             output.append(options)
         output.append(u'</ul>')
         output.append('<input type="hidden" id="%s_input" name="%s" value="%s"/>' %
@@ -63,9 +62,11 @@ class WidgetTypeSelect(forms.Widget):
 
     def render_options(self, selected_choice, id):
         # Normalize to strings.
-        output = []
-        for widget in self._widgets:
-            output.append(self.render_option(selected_choice, widget, id))
+        output = [
+            self.render_option(selected_choice, widget, id)
+            for widget in self._widgets
+        ]
+
         return u'\n'.join(output)
 
 
@@ -92,9 +93,9 @@ class UserWidgetAdmin(object):
                                      widget=form_widget, label=_('Widget Type'))
         if 'page_id' in self.request.GET and db_field.name == 'page_id':
             kwargs['widget'] = forms.HiddenInput
-        field = super(
-            UserWidgetAdmin, self).formfield_for_dbfield(db_field, **kwargs)
-        return field
+        return super(UserWidgetAdmin, self).formfield_for_dbfield(
+            db_field, **kwargs
+        )
 
     def get_widget_params_form(self, wizard):
         data = wizard.get_cleaned_data_for_step(wizard.steps.first)
@@ -126,7 +127,9 @@ class UserWidgetAdmin(object):
     def update_dashboard(self, obj):
         try:
             portal_pos = UserSettings.objects.get(
-                user=obj.user, key="dashboard:%s:pos" % obj.page_id)
+                user=obj.user, key=f"dashboard:{obj.page_id}:pos"
+            )
+
         except UserSettings.DoesNotExist:
             return
         pos = [[w for w in col.split(',') if w != str(
@@ -215,7 +218,7 @@ class BaseWidget(forms.Form):
     def widget(self):
         context = {'widget_id': self.id, 'widget_title': self.title, 'widget_icon': self.widget_icon,
                    'widget_type': self.widget_type, 'form': self, 'widget': self}
-        context.update(csrf(self.request))
+        context |= csrf(self.request)
         self.context(context)
         return loader.render_to_string(self.template, context)
 
@@ -269,8 +272,7 @@ class ModelChoiceIterator(object):
     def __iter__(self):
         from xadmin import site as g_admin_site
         for m, ma in g_admin_site._registry.items():
-            yield ('%s.%s' % (m._meta.app_label, m._meta.model_name),
-                   m._meta.verbose_name)
+            yield (f'{m._meta.app_label}.{m._meta.model_name}', m._meta.verbose_name)
 
 
 class ModelChoiceField(forms.ChoiceField):
@@ -283,8 +285,7 @@ class ModelChoiceField(forms.ChoiceField):
         self.widget.choices = self.choices
 
     def __deepcopy__(self, memo):
-        result = forms.Field.__deepcopy__(self, memo)
-        return result
+        return forms.Field.__deepcopy__(self, memo)
 
     def _get_choices(self):
         return ModelChoiceIterator(self)
@@ -299,15 +300,12 @@ class ModelChoiceField(forms.ChoiceField):
 
     def prepare_value(self, value):
         if isinstance(value, ModelBase):
-            value = '%s.%s' % (value._meta.app_label, value._meta.model_name)
+            value = f'{value._meta.app_label}.{value._meta.model_name}'
         return value
 
     def valid_value(self, value):
         value = self.prepare_value(value)
-        for k, v in self.choices:
-            if value == smart_text(k):
-                return True
-        return False
+        return any(value == smart_text(k) for k, v in self.choices)
 
 
 class ModelBaseWidget(BaseWidget):
@@ -336,8 +334,10 @@ class ModelBaseWidget(BaseWidget):
 
     def model_admin_url(self, name, *args, **kwargs):
         return reverse(
-            "%s:%s_%s_%s" % (self.admin_site.app_name, self.app_label,
-                             self.model_name, name), args=args, kwargs=kwargs)
+            f"{self.admin_site.app_name}:{self.app_label}_{self.model_name}_{name}",
+            args=args,
+            kwargs=kwargs,
+        )
 
 
 class PartialBaseWidget(BaseWidget):
@@ -386,10 +386,14 @@ class QuickBtnWidget(BaseWidget):
             btn = {}
             if 'model' in b:
                 model = self.get_model(b['model'])
-                if not self.user.has_perm("%s.view_%s" % (model._meta.app_label, model._meta.model_name)):
+                if not self.user.has_perm(
+                    f"{model._meta.app_label}.view_{model._meta.model_name}"
+                ):
                     continue
-                btn['url'] = reverse("%s:%s_%s_%s" % (self.admin_site.app_name, model._meta.app_label,
-                                                      model._meta.model_name, b.get('view', 'changelist')))
+                btn['url'] = reverse(
+                    f"{self.admin_site.app_name}:{model._meta.app_label}_{model._meta.model_name}_{b.get('view', 'changelist')}"
+                )
+
                 btn['title'] = model._meta.verbose_name
                 btn['icon'] = self.dashboard.get_model_icon(model)
             else:
@@ -439,13 +443,15 @@ class ListWidget(ModelBaseWidget, PartialBaseWidget):
 
         base_fields = list_view.base_list_display
         if len(base_fields) > 5:
-            base_fields = base_fields[0:5]
+            base_fields = base_fields[:5]
 
         context['result_headers'] = [c for c in list_view.result_headers(
         ).cells if c.field_name in base_fields]
-        context['results'] = [[o for i, o in
-                               enumerate(filter(lambda c:c.field_name in base_fields, r.cells))]
-                              for r in list_view.results()]
+        context['results'] = [
+            list(filter(lambda c: c.field_name in base_fields, r.cells))
+            for r in list_view.results()
+        ]
+
         context['result_count'] = list_view.result_count
         context['page_url'] = self.model_admin_url('changelist') + "?" + urlencode(self.list_params)
 
@@ -496,7 +502,7 @@ class Dashboard(CommAdminView):
         return self.request.path
 
     def get_portal_key(self):
-        return "dashboard:%s:pos" % self.get_page_id()
+        return f"dashboard:{self.get_page_id()}:pos"
 
     @filter_hook
     def get_widget(self, widget_or_id, data=None):
@@ -535,8 +541,11 @@ class Dashboard(CommAdminView):
             portal.append(portal_col)
 
         UserSettings(
-            user=self.user, key="dashboard:%s:pos" % self.get_page_id(),
-            value='|'.join([','.join([str(w.id) for w in col]) for col in portal])).save()
+            user=self.user,
+            key=f"dashboard:{self.get_page_id()}:pos",
+            value='|'.join([','.join([str(w.id) for w in col]) for col in portal]),
+        ).save()
+
 
         return portal
 
@@ -547,17 +556,15 @@ class Dashboard(CommAdminView):
             portal_pos = UserSettings.objects.filter(
                 user=self.user, key=self.get_portal_key())
             if len(portal_pos):
-                portal_pos = portal_pos[0].value
                 widgets = []
 
-                if portal_pos:
+                if portal_pos := portal_pos[0].value:
                     user_widgets = dict([(uw.id, uw) for uw in UserWidget.objects.filter(user=self.user, page_id=self.get_page_id())])
                     for col in portal_pos.split('|'):
                         ws = []
                         for wid in col.split(','):
                             try:
-                                widget = user_widgets.get(int(wid))
-                                if widget:
+                                if widget := user_widgets.get(int(wid)):
                                     ws.append(self.get_widget(widget))
                             except Exception as e:
                                 import logging
@@ -578,11 +585,20 @@ class Dashboard(CommAdminView):
             'title': self.get_title(),
             'icon': self.icon,
             'portal_key': self.get_portal_key(),
-            'columns': [('col-sm-%d' % int(12 / len(self.widgets)), ws) for ws in self.widgets],
-            'has_add_widget_permission': self.has_model_perm(UserWidget, 'add') and self.widget_customiz,
-            'add_widget_url': self.get_admin_url('%s_%s_add' % (UserWidget._meta.app_label, UserWidget._meta.model_name)) +
-            "?user=%s&page_id=%s&_redirect=%s" % (self.user.id, self.get_page_id(), urlquote(self.request.get_full_path()))
+            'columns': [
+                ('col-sm-%d' % (12 // len(self.widgets)), ws)
+                for ws in self.widgets
+            ],
+            'has_add_widget_permission': self.has_model_perm(UserWidget, 'add')
+            and self.widget_customiz,
+            'add_widget_url': (
+                self.get_admin_url(
+                    f'{UserWidget._meta.app_label}_{UserWidget._meta.model_name}_add'
+                )
+                + f"?user={self.user.id}&page_id={self.get_page_id()}&_redirect={urlquote(self.request.get_full_path())}"
+            ),
         }
+
         context = super(Dashboard, self).get_context()
         context.update(new_context)
         return context
@@ -605,7 +621,11 @@ class Dashboard(CommAdminView):
                         user=self.user, page_id=self.get_page_id(), id=widget_id)
                     widget.delete()
                     try:
-                        portal_pos = UserSettings.objects.get(user=self.user, key="dashboard:%s:pos" % self.get_page_id())
+                        portal_pos = UserSettings.objects.get(
+                            user=self.user,
+                            key=f"dashboard:{self.get_page_id()}:pos",
+                        )
+
                         pos = [[w for w in col.split(',') if w != str(
                             widget_id)] for col in portal_pos.value.split('|')]
                         portal_pos.value = '|'.join([','.join(col) for col in pos])

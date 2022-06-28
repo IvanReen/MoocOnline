@@ -31,9 +31,7 @@ class SortableListPlugin(BaseAdminPlugin):
 
     def result_row(self, __, obj):
         row = __()
-        row.update({
-            "tagattrs": "order-key=order_{}".format(obj.pk)
-        })
+        row.update({"tagattrs": f"order-key=order_{obj.pk}"})
         return row
 
     def result_item(self, item, obj, field_name, row):

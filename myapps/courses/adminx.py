@@ -41,8 +41,6 @@ class CourseAdmin(object):
             course_org.save()
 
     def post(self, request, *args, **kwargs):
-        if 'excel' in request.FILES:
-            pass
         return super(CourseAdmin, self).post(request, args, kwargs)
 
 

@@ -103,8 +103,7 @@ class AdminSite(object):
                                                'cannot be registered with admin.' % model.__name__)
 
                 if model in self._registry:
-                    raise AlreadyRegistered(
-                        'The model %s is already registered' % model.__name__)
+                    raise AlreadyRegistered(f'The model {model.__name__} is already registered')
 
                 # If we got **options then dynamically construct a subclass of
                 # admin_class with those **options.
@@ -114,18 +113,25 @@ class AdminSite(object):
                     # which causes issues later on.
                     options['__module__'] = __name__
 
-                admin_class = type(str("%s%sAdmin" % (model._meta.app_label, model._meta.model_name)), (admin_class,), options or {})
+                admin_class = type(
+                    str(f"{model._meta.app_label}{model._meta.model_name}Admin"),
+                    (admin_class,),
+                    options or {},
+                )
+
                 admin_class.model = model
                 admin_class.order = self.model_admins_order
                 self.model_admins_order += 1
                 self._registry[model] = admin_class
             else:
                 if model in self._registry_avs:
-                    raise AlreadyRegistered('The admin_view_class %s is already registered' % model.__name__)
+                    raise AlreadyRegistered(
+                        f'The admin_view_class {model.__name__} is already registered'
+                    )
+
                 if options:
                     options['__module__'] = __name__
-                    admin_class = type(str(
-                        "%sAdmin" % model.__name__), (admin_class,), options)
+                    admin_class = type(str(f"{model.__name__}Admin"), (admin_class,), options)
 
                 # Instantiate the admin class to save in the registry
                 self._registry_avs[model] = admin_class
@@ -142,13 +148,12 @@ class AdminSite(object):
         for model in model_or_iterable:
             if isinstance(model, ModelBase):
                 if model not in self._registry:
-                    raise NotRegistered(
-                        'The model %s is not registered' % model.__name__)
+                    raise NotRegistered(f'The model {model.__name__} is not registered')
                 del self._registry[model]
-            else:
-                if model not in self._registry_avs:
-                    raise NotRegistered('The admin_view_class %s is not registered' % model.__name__)
+            elif model in self._registry_avs:
                 del self._registry_avs[model]
+            else:
+                raise NotRegistered(f'The admin_view_class {model.__name__} is not registered')
 
     def set_loginview(self, login_view):
         self.login_view = login_view
@@ -174,8 +179,12 @@ class AdminSite(object):
                                        "your INSTALLED_APPS setting in order to use the admin application.")
 
         default_template_engine = Engine.get_default()
-        if not ('django.contrib.auth.context_processors.auth' in default_template_engine.context_processors or
-                'django.core.context_processors.auth' in default_template_engine.context_processors):
+        if (
+            'django.contrib.auth.context_processors.auth'
+            not in default_template_engine.context_processors
+            and 'django.core.context_processors.auth'
+            not in default_template_engine.context_processors
+        ):
             raise ImproperlyConfigured("Put 'django.contrib.auth.context_processors.auth' "
                                        "in your TEMPLATE_CONTEXT_PROCESSORS setting in order to use the admin application.")
 
@@ -219,10 +228,10 @@ class AdminSite(object):
 
         if name in self._registry_settings:
             return self._registry_settings[name]
-        elif name.endswith('admin') and name[0:-5] in self._registry_settings:
-            return self._registry_settings[name[0:-5]]
-        elif name.endswith('adminview') and name[0:-9] in self._registry_settings:
-            return self._registry_settings[name[0:-9]]
+        elif name.endswith('admin') and name[:-5] in self._registry_settings:
+            return self._registry_settings[name[:-5]]
+        elif name.endswith('adminview') and name[:-9] in self._registry_settings:
+            return self._registry_settings[name[:-9]]
 
         return None
 
@@ -232,14 +241,20 @@ class AdminSite(object):
                 attrs = {}
                 bases = [plugin_class]
                 for oc in option_classes:
-                    attrs.update(self._get_merge_attrs(oc, plugin_class))
-                    meta_class = getattr(oc, plugin_class.__name__, getattr(oc, plugin_class.__name__.replace('Plugin', ''), None))
-                    if meta_class:
+                    attrs |= self._get_merge_attrs(oc, plugin_class)
+                    if meta_class := getattr(
+                        oc,
+                        plugin_class.__name__,
+                        getattr(oc, plugin_class.__name__.replace('Plugin', ''), None),
+                    ):
                         bases.insert(0, meta_class)
                 if attrs:
                     plugin_class = MergeAdminMetaclass(
-                        '%s%s' % (''.join([oc.__name__ for oc in option_classes]), plugin_class.__name__),
-                        tuple(bases), attrs)
+                        f"{''.join([oc.__name__ for oc in option_classes])}{plugin_class.__name__}",
+                        tuple(bases),
+                        attrs,
+                    )
+
             return plugin_class
         return merge_class
 
@@ -250,11 +265,9 @@ class AdminSite(object):
         for klass in admin_view_class.mro():
             if klass == BaseAdminView or issubclass(klass, BaseAdminView):
                 merge_opts = []
-                reg_class = self._registry_avs.get(klass)
-                if reg_class:
+                if reg_class := self._registry_avs.get(klass):
                     merge_opts.append(reg_class)
-                settings_class = self._get_settings_class(klass)
-                if settings_class:
+                if settings_class := self._get_settings_class(klass):
                     merge_opts.append(settings_class)
                 merge_opts.extend(opts)
                 ps = self._registry_plugins.get(klass, [])
@@ -265,11 +278,9 @@ class AdminSite(object):
     def get_view_class(self, view_class, option_class=None, **opts):
         merges = [option_class] if option_class else []
         for klass in view_class.mro():
-            reg_class = self._registry_avs.get(klass)
-            if reg_class:
+            if reg_class := self._registry_avs.get(klass):
                 merges.append(reg_class)
-            settings_class = self._get_settings_class(klass)
-            if settings_class:
+            if settings_class := self._get_settings_class(klass):
                 merges.append(settings_class)
             merges.append(klass)
         new_class_name = ''.join([c.__name__ for c in merges])

@@ -68,17 +68,24 @@ class RelatedFieldWidgetWrapper(forms.Widget):
 
     @property
     def media(self):
-        media = self.widget.media + vendor('xadmin.plugin.quick-form.js')
-        return media
+        return self.widget.media + vendor('xadmin.plugin.quick-form.js')
 
     def render(self, name, value, renderer=None, *args, **kwargs):
         self.widget.choices = self.choices
         output = []
         if self.add_url:
-            output.append(u'<a href="%s" title="%s" class="btn btn-primary btn-sm btn-ajax pull-right" data-for-id="id_%s" data-refresh-url="%s"><i class="fa fa-plus"></i></a>'
-                          % (
-                              self.add_url, (_('Create New %s') % self.rel.model._meta.verbose_name), name,
-                              "%s?_field=%s&%s=" % (self.rel_add_url, name, name)))
+            output.append(
+                (
+                    u'<a href="%s" title="%s" class="btn btn-primary btn-sm btn-ajax pull-right" data-for-id="id_%s" data-refresh-url="%s"><i class="fa fa-plus"></i></a>'
+                    % (
+                        self.add_url,
+                        _('Create New %s') % self.rel.model._meta.verbose_name,
+                        name,
+                        f"{self.rel_add_url}?_field={name}&{name}=",
+                    )
+                )
+            )
+
         output.extend(['<div class="control-wrap" id="id_%s_wrap_container">' % name,
                        self.widget.render(name, value, *args, **kwargs), '</div>'])
         return mark_safe(u''.join(output))

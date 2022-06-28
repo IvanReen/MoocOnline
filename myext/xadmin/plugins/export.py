@@ -44,11 +44,21 @@ class ExportMenuPlugin(BaseAdminPlugin):
 
     def block_top_toolbar(self, context, nodes):
         if self.list_export:
-            context.update({
-                'show_export_all': self.admin_view.paginator.count > self.admin_view.list_per_page and not ALL_VAR in self.admin_view.request.GET,
-                'form_params': self.admin_view.get_form_params({'_do_': 'export'}, ('export_type',)),
-                'export_types': [{'type': et, 'name': self.export_names[et]} for et in self.list_export],
-            })
+            context.update(
+                {
+                    'show_export_all': self.admin_view.paginator.count
+                    > self.admin_view.list_per_page
+                    and ALL_VAR not in self.admin_view.request.GET,
+                    'form_params': self.admin_view.get_form_params(
+                        {'_do_': 'export'}, ('export_type',)
+                    ),
+                    'export_types': [
+                        {'type': et, 'name': self.export_names[et]}
+                        for et in self.list_export
+                    ],
+                }
+            )
+
             nodes.append(loader.render_to_string('xadmin/blocks/model_list.top_toolbar.exports.html',
                                                  context=get_context_dict(context)))
 
@@ -65,12 +75,11 @@ class ExportPlugin(BaseAdminPlugin):
     def _format_value(self, o):
         if (o.field is None and getattr(o.attr, 'boolean', False)) or \
            (o.field and isinstance(o.field, (BooleanField, NullBooleanField))):
-                value = o.value
+            return o.value
         elif str(o.text).startswith("<span class='text-muted'>"):
-            value = escape(str(o.text)[25:-7])
+            return escape(str(o.text)[25:-7])
         else:
-            value = escape(str(o.text))
-        return value
+            return escape(str(o.text))
 
     def _get_objects(self, context):
         headers = [c for c in context['result_headers'].cells if c.export]
@@ -96,8 +105,7 @@ class ExportPlugin(BaseAdminPlugin):
 
         model_name = self.opts.verbose_name
         book = xlsxwriter.Workbook(output)
-        sheet = book.add_worksheet(
-            u"%s %s" % (_(u'Sheet'), force_text(model_name)))
+        sheet = book.add_worksheet(f"{_(u'Sheet')} {force_text(model_name)}")
         styles = {'datetime': book.add_format({'num_format': 'yyyy-mm-dd hh:mm:ss'}),
                   'date': book.add_format({'num_format': 'yyyy-mm-dd'}),
                   'time': book.add_format({'num_format': 'hh:mm:ss'}),
@@ -110,15 +118,14 @@ class ExportPlugin(BaseAdminPlugin):
             for colx, value in enumerate(row):
                 if export_header and rowx == 0:
                     cell_style = styles['header']
+                elif isinstance(value, datetime.datetime):
+                    cell_style = styles['datetime']
+                elif isinstance(value, datetime.date):
+                    cell_style = styles['date']
+                elif isinstance(value, datetime.time):
+                    cell_style = styles['time']
                 else:
-                    if isinstance(value, datetime.datetime):
-                        cell_style = styles['datetime']
-                    elif isinstance(value, datetime.date):
-                        cell_style = styles['date']
-                    elif isinstance(value, datetime.time):
-                        cell_style = styles['time']
-                    else:
-                        cell_style = styles['default']
+                    cell_style = styles['default']
                 sheet.write(rowx, colx, value, cell_style)
         book.close()
 
@@ -133,8 +140,7 @@ class ExportPlugin(BaseAdminPlugin):
 
         model_name = self.opts.verbose_name
         book = xlwt.Workbook(encoding='utf8')
-        sheet = book.add_sheet(
-            u"%s %s" % (_(u'Sheet'), force_text(model_name)))
+        sheet = book.add_sheet(f"{_(u'Sheet')} {force_text(model_name)}")
         styles = {'datetime': xlwt.easyxf(num_format_str='yyyy-mm-dd hh:mm:ss'),
                   'date': xlwt.easyxf(num_format_str='yyyy-mm-dd'),
                   'time': xlwt.easyxf(num_format_str='hh:mm:ss'),
@@ -147,15 +153,14 @@ class ExportPlugin(BaseAdminPlugin):
             for colx, value in enumerate(row):
                 if export_header and rowx == 0:
                     cell_style = styles['header']
+                elif isinstance(value, datetime.datetime):
+                    cell_style = styles['datetime']
+                elif isinstance(value, datetime.date):
+                    cell_style = styles['date']
+                elif isinstance(value, datetime.time):
+                    cell_style = styles['time']
                 else:
-                    if isinstance(value, datetime.datetime):
-                        cell_style = styles['datetime']
-                    elif isinstance(value, datetime.date):
-                        cell_style = styles['date']
-                    elif isinstance(value, datetime.time):
-                        cell_style = styles['time']
-                    else:
-                        cell_style = styles['default']
+                    cell_style = styles['default']
                 sheet.write(rowx, colx, value, style=cell_style)
         book.save(output)
 
@@ -173,14 +178,10 @@ class ExportPlugin(BaseAdminPlugin):
 
     def get_csv_export(self, context):
         datas = self._get_datas(context)
-        stream = []
-
         if self.request.GET.get('export_csv_header', 'off') != 'on':
             datas = datas[1:]
 
-        for row in datas:
-            stream.append(','.join(map(self._format_csv_text, row)))
-
+        stream = [','.join(map(self._format_csv_text, row)) for row in datas]
         return '\r\n'.join(stream)
 
     def _to_xml(self, xml, data):
@@ -221,13 +222,17 @@ class ExportPlugin(BaseAdminPlugin):
     def get_response(self, response, context, *args, **kwargs):
         file_type = self.request.GET.get('export_type', 'csv')
         response = HttpResponse(
-            content_type="%s; charset=UTF-8" % self.export_mimes[file_type])
+            content_type=f"{self.export_mimes[file_type]}; charset=UTF-8"
+        )
+
 
         file_name = self.opts.verbose_name.replace(' ', '_')
-        response['Content-Disposition'] = ('attachment; filename=%s.%s' % (
-            file_name, file_type)).encode('utf-8')
+        response[
+            'Content-Disposition'
+        ] = f'attachment; filename={file_name}.{file_type}'.encode('utf-8')
 
-        response.write(getattr(self, 'get_%s_export' % file_type)(context))
+
+        response.write(getattr(self, f'get_{file_type}_export')(context))
         return response
 
     # View Methods

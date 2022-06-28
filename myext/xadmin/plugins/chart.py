@@ -35,9 +35,9 @@ class ChartWidget(ModelBaseWidget):
         self.charts = {}
         self.one_chart = False
         model_admin = self.admin_site._registry[self.model]
-        chart = self.chart
-
         if hasattr(model_admin, 'data_charts'):
+            chart = self.chart
+
             if chart and chart in model_admin.data_charts:
                 self.charts = {chart: model_admin.data_charts[chart]}
                 self.one_chart = True
@@ -149,7 +149,7 @@ class ChartsView(ListAdminView):
         except Exception:
             pass
 
-        option.update(self.chart.get('option', {}))
+        option |= self.chart.get('option', {})
 
         content = {'data': datas, 'option': option}
         result = json.dumps(content, cls=JSONEncoder, ensure_ascii=False)

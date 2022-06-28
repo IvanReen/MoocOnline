@@ -100,7 +100,7 @@ class QuickFilterPlugin(BaseAdminPlugin):
         if not self.free_query_filter:
             for key, value in lookup_params.items():
                 if not self.lookup_allowed(key, value):
-                    raise SuspiciousOperation("Filtering by %s not allowed" % key)
+                    raise SuspiciousOperation(f"Filtering by {key} not allowed")
 
         self.filter_specs = []
         if self.list_quick_filter:
@@ -120,7 +120,7 @@ class QuickFilterPlugin(BaseAdminPlugin):
                         field_limit = list_quick_filter['limit']
                     if 'sort' in list_quick_filter and callable(list_quick_filter['sort']):
                         sort_key = list_quick_filter['sort']
-                    if 'cache' in list_quick_filter and type(list_quick_filter) == dict:
+                    if 'cache' in list_quick_filter:
                         cache_config = list_quick_filter['cache']
 
                 else:
@@ -134,7 +134,7 @@ class QuickFilterPlugin(BaseAdminPlugin):
                                                              field_order_by=field_order_by, field_limit=field_limit, sort_key=sort_key, cache_config=cache_config)
 
                 if len(field_parts) > 1:
-                    spec.title = "%s %s" % (field_parts[-2].name, spec.title)
+                    spec.title = f"{field_parts[-2].name} {spec.title}"
 
                 # Check if we need to use distinct()
                 use_distinct = True  # (use_distinct orlookup_needs_distinct(self.opts, field_path))
@@ -156,10 +156,7 @@ class QuickFilterPlugin(BaseAdminPlugin):
             obj = list(obj)
         self.admin_view.quickfilter['used_filter_num'] = len(obj)
 
-        if use_distinct:
-            return queryset.distinct()
-        else:
-            return queryset
+        return queryset.distinct() if use_distinct else queryset
 
     def block_left_navbar(self, context, nodes):
         nodes.append(loader.render_to_string('xadmin/blocks/modal_list.left_navbar.quickfilter.html',

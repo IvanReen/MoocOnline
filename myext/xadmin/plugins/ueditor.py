@@ -16,18 +16,25 @@ class XadminUEditorWidget(UEditorWidget):
 class UeditorPlugin(BaseAdminPlugin):
 
     def get_field_style(self, attrs, db_field, style, **kwargs):
-        if style == 'ueditor':
-            if isinstance(db_field, UEditorField):
-                widget = db_field.formfield().widget
-                param = {}
-                param.update(widget.ueditor_settings)
-                param.update(widget.attrs)
-                return {'widget': XadminUEditorWidget(**param)}
+        if style == 'ueditor' and isinstance(db_field, UEditorField):
+            widget = db_field.formfield().widget
+            param = {}
+            param |= widget.ueditor_settings
+            param.update(widget.attrs)
+            return {'widget': XadminUEditorWidget(**param)}
         return attrs
 
     def block_extrahead(self, context, nodes):
-        js = '<script type="text/javascript" src="%s"></script>' % (settings.STATIC_URL + "ueditor/ueditor.config.js")         #自己的静态目录
-        js += '<script type="text/javascript" src="%s"></script>' % (settings.STATIC_URL + "ueditor/ueditor.all.min.js")   #自己的静态目录
+        js = (
+            '<script type="text/javascript" src="%s"></script>'
+            % f"{settings.STATIC_URL}ueditor/ueditor.config.js"
+        )
+
+        js += (
+            '<script type="text/javascript" src="%s"></script>'
+            % f"{settings.STATIC_URL}ueditor/ueditor.all.min.js"
+        )
+
         nodes.append(js)
 
 xadmin.site.register_plugin(UeditorPlugin, UpdateAdminView)

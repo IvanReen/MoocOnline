@@ -26,7 +26,7 @@ class AdminDateWidget(forms.DateInput):
     def __init__(self, attrs=None, format=None):
         final_attrs = {'class': 'date-field form-control', 'size': '10'}
         if attrs is not None:
-            final_attrs.update(attrs)
+            final_attrs |= attrs
         super(AdminDateWidget, self).__init__(attrs=final_attrs, format=format)
 
     def render(self, name, value, attrs=None, renderer=None):
@@ -44,7 +44,7 @@ class AdminTimeWidget(forms.TimeInput):
     def __init__(self, attrs=None, format=None):
         final_attrs = {'class': 'time-field form-control', 'size': '8'}
         if attrs is not None:
-            final_attrs.update(attrs)
+            final_attrs |= attrs
         super(AdminTimeWidget, self).__init__(attrs=final_attrs, format=format)
 
     def render(self, name, value, attrs=None, renderer=None):
@@ -129,12 +129,12 @@ class AdminCheckboxSelect(forms.CheckboxSelectMultiple):
         final_attrs = self.build_attrs(attrs, extra_attrs={'name': name})
         output = []
         # Normalize to strings
-        str_values = set([force_text(v) for v in value])
+        str_values = {force_text(v) for v in value}
         for i, (option_value, option_label) in enumerate(chain(self.choices, choices)):
             # If an ID attribute was given, add a numeric index as a suffix,
             # so that the checkboxes don't all have the same ID attribute.
             if has_id:
-                final_attrs = dict(final_attrs, id='%s_%s' % (attrs['id'], i))
+                final_attrs = dict(final_attrs, id=f"{attrs['id']}_{i}")
                 label_for = u' for="%s"' % final_attrs['id']
             else:
                 label_for = ''
@@ -157,7 +157,7 @@ class AdminSelectMultiple(forms.SelectMultiple):
     def __init__(self, attrs=None):
         final_attrs = {'class': 'select-multi'}
         if attrs is not None:
-            final_attrs.update(attrs)
+            final_attrs |= attrs
         super(AdminSelectMultiple, self).__init__(attrs=final_attrs)
 
 
@@ -173,7 +173,7 @@ class AdminTextareaWidget(forms.Textarea):
     def __init__(self, attrs=None):
         final_attrs = {'class': 'textarea-field'}
         if attrs is not None:
-            final_attrs.update(attrs)
+            final_attrs |= attrs
         super(AdminTextareaWidget, self).__init__(attrs=final_attrs)
 
 
@@ -182,7 +182,7 @@ class AdminTextInputWidget(forms.TextInput):
     def __init__(self, attrs=None):
         final_attrs = {'class': 'text-field'}
         if attrs is not None:
-            final_attrs.update(attrs)
+            final_attrs |= attrs
         super(AdminTextInputWidget, self).__init__(attrs=final_attrs)
 
 
@@ -191,7 +191,7 @@ class AdminURLFieldWidget(forms.TextInput):
     def __init__(self, attrs=None):
         final_attrs = {'class': 'url-field'}
         if attrs is not None:
-            final_attrs.update(attrs)
+            final_attrs |= attrs
         super(AdminURLFieldWidget, self).__init__(attrs=final_attrs)
 
 
@@ -200,7 +200,7 @@ class AdminIntegerFieldWidget(forms.TextInput):
     def __init__(self, attrs=None):
         final_attrs = {'class': 'int-field'}
         if attrs is not None:
-            final_attrs.update(attrs)
+            final_attrs |= attrs
         super(AdminIntegerFieldWidget, self).__init__(attrs=final_attrs)
 
 
@@ -209,6 +209,6 @@ class AdminCommaSeparatedIntegerFieldWidget(forms.TextInput):
     def __init__(self, attrs=None):
         final_attrs = {'class': 'sep-int-field'}
         if attrs is not None:
-            final_attrs.update(attrs)
+            final_attrs |= attrs
         super(AdminCommaSeparatedIntegerFieldWidget,
               self).__init__(attrs=final_attrs)

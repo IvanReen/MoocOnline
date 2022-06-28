@@ -191,7 +191,7 @@ class ListAdminView(ModelAdminView):
                     return SimpleTemplateResponse('xadmin/views/invalid_setup.html', {
                         'title': _('Database error'),
                     })
-                return HttpResponseRedirect(self.request.path + '?' + ERROR_FLAG + '=1')
+                return HttpResponseRedirect(f'{self.request.path}?{ERROR_FLAG}=1')
         self.has_more = self.result_count > (
             self.list_per_page * self.page_num + len(self.result_list))
 
@@ -229,9 +229,6 @@ class ListAdminView(ModelAdminView):
                             related_fields.append(field_name)
                 if related_fields:
                     queryset = queryset.select_related(*related_fields)
-            else:
-                pass
-
         # Then, set queryset ordering.
         queryset = queryset.order_by(*self.get_ordering())
 
@@ -297,7 +294,7 @@ class ListAdminView(ModelAdminView):
         # ordering fields so we can guarantee a deterministic order across all
         # database backends.
         pk_name = self.opts.pk.name
-        if not (set(ordering) & set(['pk', '-pk', pk_name, '-' + pk_name])):
+        if not set(ordering) & {'pk', '-pk', pk_name, f'-{pk_name}'}:
             # The two sets do not intersect, meaning the pk isn't present. So
             # we add it.
             ordering.append('-pk')
@@ -459,7 +456,7 @@ class ListAdminView(ModelAdminView):
             if six.PY3:
                 arr = list(arr)
             sort_priority = arr.index(field_name) + 1
-            th_classes.append('sorted %sending' % order_type)
+            th_classes.append(f'sorted {order_type}ending')
             new_order_type = {'asc': 'desc', 'desc': 'asc'}[order_type]
 
         # build new ordering param
@@ -475,19 +472,18 @@ class ListAdminView(ModelAdminView):
                 # We want clicking on this header to bring the ordering to the
                 # front
                 o_list_asc.insert(0, j)
-                o_list_desc.insert(0, '-' + j)
-                o_list_toggle.append(param)
-                # o_list_remove - omit
+                o_list_desc.insert(0, f'-{j}')
+                        # o_list_remove - omit
             else:
                 param = make_qs_param(ot, j)
                 o_list_asc.append(param)
                 o_list_desc.append(param)
-                o_list_toggle.append(param)
                 o_list_remove.append(param)
 
+            o_list_toggle.append(param)
         if field_name not in ordering_field_columns:
             o_list_asc.insert(0, field_name)
-            o_list_desc.insert(0, '-' + field_name)
+            o_list_desc.insert(0, f'-{field_name}')
 
         item.sorted = sorted
         item.sortable = True
@@ -567,8 +563,9 @@ class ListAdminView(ModelAdminView):
             item.row['is_display_first'] = False
             item.is_display_link = True
             if self.list_display_links_details:
-                item_res_uri = self.model_admin_url("detail", getattr(obj, self.pk_attname))
-                if item_res_uri:
+                if item_res_uri := self.model_admin_url(
+                    "detail", getattr(obj, self.pk_attname)
+                ):
                     if self.has_change_permission(obj):
                         edit_url = self.model_admin_url("change", getattr(obj, self.pk_attname))
                     else:
@@ -592,10 +589,7 @@ class ListAdminView(ModelAdminView):
 
     @filter_hook
     def results(self):
-        results = []
-        for obj in self.result_list:
-            results.append(self.result_row(obj))
-        return results
+        return [self.result_row(obj) for obj in self.result_list]
 
     @filter_hook
     def url_for_result(self, result):
@@ -623,8 +617,6 @@ class ListAdminView(ModelAdminView):
             page_range = []
         else:
             ON_EACH_SIDE = {'normal': 5, 'small': 3}.get(page_type, 3)
-            ON_ENDS = 2
-
             # If there are 10 or fewer pages, display links to every page.
             # Otherwise, do some fancy
             if paginator.num_pages <= 10:
@@ -634,13 +626,15 @@ class ListAdminView(ModelAdminView):
                 # links at either end of the list of pages, and there are always
                 # ON_EACH_SIDE links at either end of the "current page" link.
                 page_range = []
+                ON_ENDS = 2
+
                 if page_num > (ON_EACH_SIDE + ON_ENDS):
-                    page_range.extend(range(0, ON_EACH_SIDE - 1))
+                    page_range.extend(range(ON_EACH_SIDE - 1))
                     page_range.append(DOT)
                     page_range.extend(
                         range(page_num - ON_EACH_SIDE, page_num + 1))
                 else:
-                    page_range.extend(range(0, page_num + 1))
+                    page_range.extend(range(page_num + 1))
                 if page_num < (paginator.num_pages - ON_EACH_SIDE - ON_ENDS - 1):
                     page_range.extend(
                         range(page_num + 1, page_num + ON_EACH_SIDE + 1))

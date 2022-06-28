@@ -8,8 +8,4 @@ def get_context_dict(context):
     :param context: RequestContext
     :return: dict
     """
-    if isinstance(context, RequestContext):
-        ctx = context.flatten()
-    else:
-        ctx = context
-    return ctx
+    return context.flatten() if isinstance(context, RequestContext) else context

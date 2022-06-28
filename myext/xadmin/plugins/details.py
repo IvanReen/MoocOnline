@@ -37,15 +37,16 @@ class DetailsPlugin(BaseAdminPlugin):
             if rel_obj and has_view_perm:
                 opts = rel_obj._meta
                 try:
-                    item_res_uri = reverse(
-                        '%s:%s_%s_detail' % (self.admin_site.app_name,
-                                             opts.app_label, opts.model_name),
-                        args=(getattr(rel_obj, opts.pk.attname),))
-                    if item_res_uri:
+                    if item_res_uri := reverse(
+                        f'{self.admin_site.app_name}:{opts.app_label}_{opts.model_name}_detail',
+                        args=(getattr(rel_obj, opts.pk.attname),),
+                    ):
                         if has_change_perm:
                             edit_url = reverse(
-                                '%s:%s_%s_change' % (self.admin_site.app_name, opts.app_label, opts.model_name),
-                                args=(getattr(rel_obj, opts.pk.attname),))
+                                f'{self.admin_site.app_name}:{opts.app_label}_{opts.model_name}_change',
+                                args=(getattr(rel_obj, opts.pk.attname),),
+                            )
+
                         else:
                             edit_url = ''
                         item.btns.append('<a data-res-uri="%s" data-edit-uri="%s" class="details-handler" rel="tooltip" title="%s"><i class="fa fa-info-circle"></i></a>'

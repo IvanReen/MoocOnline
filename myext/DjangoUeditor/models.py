@@ -34,7 +34,7 @@ class UEditorField(models.TextField):
 
     def formfield(self, **kwargs):
         defaults = {'widget': UEditorWidget(attrs=self.ueditor_settings)}
-        defaults.update(kwargs)
+        defaults |= kwargs
         if defaults['widget'] == admin_widgets.AdminTextareaWidget:
             defaults['widget'] = AdminUEditorWidget(
                 attrs=self.ueditor_settings)

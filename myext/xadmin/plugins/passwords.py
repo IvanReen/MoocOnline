@@ -33,25 +33,24 @@ class ResetPasswordSendView(BaseAdminView):
     def post(self, request, *args, **kwargs):
         form = self.password_reset_form(request.POST)
 
-        if form.is_valid():
-            opts = {
-                'use_https': request.is_secure(),
-                'token_generator': self.password_reset_token_generator,
-                'email_template_name': self.password_reset_email_template,
-                'request': request,
-                'domain_override': request.get_host()
-            }
-
-            if self.password_reset_from_email:
-                opts['from_email'] = self.password_reset_from_email
-            if self.password_reset_subject_template:
-                opts['subject_template_name'] = self.password_reset_subject_template
-
-            form.save(**opts)
-            context = super(ResetPasswordSendView, self).get_context()
-            return TemplateResponse(request, self.password_reset_done_template, context)
-        else:
+        if not form.is_valid():
             return self.get(request, form=form)
+        opts = {
+            'use_https': request.is_secure(),
+            'token_generator': self.password_reset_token_generator,
+            'email_template_name': self.password_reset_email_template,
+            'request': request,
+            'domain_override': request.get_host()
+        }
+
+        if self.password_reset_from_email:
+            opts['from_email'] = self.password_reset_from_email
+        if self.password_reset_subject_template:
+            opts['subject_template_name'] = self.password_reset_subject_template
+
+        form.save(**opts)
+        context = super(ResetPasswordSendView, self).get_context()
+        return TemplateResponse(request, self.password_reset_done_template, context)
 
 
 site.register_view(r'^xadmin/password_reset/$', ResetPasswordSendView, name='xadmin_password_reset')

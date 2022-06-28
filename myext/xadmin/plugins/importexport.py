@@ -105,10 +105,7 @@ class ImportBaseView(ModelAdminView):
     tmp_storage_class = None
 
     def get_skip_admin_log(self):
-        if self.skip_admin_log is None:
-            return SKIP_ADMIN_LOG
-        else:
-            return self.skip_admin_log
+        return SKIP_ADMIN_LOG if self.skip_admin_log is None else self.skip_admin_log
 
     def get_tmp_storage_class(self):
         if self.tmp_storage_class is None:
@@ -124,11 +121,15 @@ class ImportBaseView(ModelAdminView):
 
     def get_resource_class(self, usage):
         if usage == 'import':
-            return self.import_export_args.get('import_resource_class') if self.import_export_args.get(
-                'import_resource_class') else modelresource_factory(self.model)
+            return self.import_export_args.get(
+                'import_resource_class'
+            ) or modelresource_factory(self.model)
+
         elif usage == 'export':
-            return self.import_export_args.get('export_resource_class') if self.import_export_args.get(
-                'export_resource_class') else modelresource_factory(self.model)
+            return self.import_export_args.get(
+                'export_resource_class'
+            ) or modelresource_factory(self.model)
+
         else:
             return modelresource_factory(self.model)
 
@@ -226,10 +227,14 @@ class ImportView(ImportBaseView):
                     data = force_text(data, self.from_encoding)
                 dataset = input_format.create_dataset(data)
             except UnicodeDecodeError as e:
-                return HttpResponse(_(u"<h1>Imported file has a wrong encoding: %s</h1>" % e))
+                return HttpResponse(_(f"<h1>Imported file has a wrong encoding: {e}</h1>"))
             except Exception as e:
-                return HttpResponse(_(u"<h1>%s encountered while trying to read file: %s</h1>" % (type(e).__name__,
-                                                                                                  import_file.name)))
+                return HttpResponse(
+                    _(
+                        f"<h1>{type(e).__name__} encountered while trying to read file: {import_file.name}</h1>"
+                    )
+                )
+
             result = resource.import_data(dataset, dry_run=True,
                                           raise_errors=False,
                                           file_name=import_file.name,
@@ -292,15 +297,19 @@ class ImportProcessView(ImportBaseView):
                 }
                 content_type_id = ContentType.objects.get_for_model(self.model).pk
                 for row in result:
-                    if row.import_type != row.IMPORT_TYPE_ERROR and row.import_type != row.IMPORT_TYPE_SKIP:
+                    if row.import_type not in [
+                        row.IMPORT_TYPE_ERROR,
+                        row.IMPORT_TYPE_SKIP,
+                    ]:
                         LogEntry.objects.log_action(
                             user_id=request.user.pk,
                             content_type_id=content_type_id,
                             object_id=row.object_id,
                             object_repr=row.object_repr,
                             action_flag=logentry_map[row.import_type],
-                            change_message="%s through import_export" % row.import_type,
+                            change_message=f"{row.import_type} through import_export",
                         )
+
             success_message = str(_(u'Import finished')) + ' , ' + str(_(u'Add')) + ' : %d' % result.totals[
                 RowResult.IMPORT_TYPE_NEW] + ' , ' + str(_(u'Update')) + ' : %d' % result.totals[
                 RowResult.IMPORT_TYPE_UPDATE]
@@ -337,11 +346,15 @@ class ExportMixin(object):
 
     def get_resource_class(self, usage):
         if usage == 'import':
-            return self.import_export_args.get('import_resource_class') if self.import_export_args.get(
-                'import_resource_class') else modelresource_factory(self.model)
+            return self.import_export_args.get(
+                'import_resource_class'
+            ) or modelresource_factory(self.model)
+
         elif usage == 'export':
-            return self.import_export_args.get('export_resource_class') if self.import_export_args.get(
-                'export_resource_class') else modelresource_factory(self.model)
+            return self.import_export_args.get(
+                'export_resource_class'
+            ) or modelresource_factory(self.model)
+
         else:
             return modelresource_factory(self.model)
 
@@ -359,10 +372,7 @@ class ExportMixin(object):
 
     def get_export_filename(self, file_format):
         date_str = datetime.now().strftime('%Y-%m-%d-%H%M%S')
-        filename = "%s-%s.%s" % (self.opts.verbose_name.encode('utf-8'),
-                                 date_str,
-                                 file_format.get_extension())
-        return filename
+        return f"{self.opts.verbose_name.encode('utf-8')}-{date_str}.{file_format.get_extension()}"
 
     def get_export_queryset(self, request, context):
         """
@@ -374,19 +384,25 @@ class ExportMixin(object):
         scope = request.GET.get('scope')
         select_across = request.GET.get('_select_across', False) == '1'
         selected = request.GET.get('_selected_actions', '')
-        if scope == 'all':
-            queryset = self.admin_view.queryset()
+        if (
+            scope != 'all'
+            and scope != 'header_only'
+            and scope == 'selected'
+            and not select_across
+        ):
+            selected_pk = selected.split(',')
+            return self.admin_view.queryset().filter(pk__in=selected_pk)
+        elif (
+            scope != 'all'
+            and scope != 'header_only'
+            and scope == 'selected'
+            or scope == 'all'
+        ):
+            return self.admin_view.queryset()
         elif scope == 'header_only':
-            queryset = []
-        elif scope == 'selected':
-            if not select_across:
-                selected_pk = selected.split(',')
-                queryset = self.admin_view.queryset().filter(pk__in=selected_pk)
-            else:
-                queryset = self.admin_view.queryset()
+            return []
         else:
-            queryset = [r['object'] for r in context['results']]
-        return queryset
+            return [r['object'] for r in context['results']]
 
     def get_export_data(self, file_format, queryset, *args, **kwargs):
         """
@@ -395,8 +411,7 @@ class ExportMixin(object):
         request = kwargs.pop("request")
         resource_class = self.get_export_resource_class()
         data = resource_class(**self.get_export_resource_kwargs(request)).export(queryset, *args, **kwargs)
-        export_data = file_format.export_data(data)
-        return export_data
+        return file_format.export_data(data)
 
 
 class ExportMenuPlugin(ExportMixin, BaseAdminPlugin):
@@ -433,11 +448,7 @@ class ExportPlugin(ExportMixin, BaseAdminPlugin):
         if not has_view_perm:
             raise PermissionDenied
 
-        export_format = self.request.GET.get('file_format')
-
-        if not export_format:
-            messages.warning(self.request, _('You must select an export format.'))
-        else:
+        if export_format := self.request.GET.get('file_format'):
             formats = self.get_export_formats()
             file_format = formats[int(export_format)]()
             queryset = self.get_export_queryset(self.request, context)
@@ -448,11 +459,14 @@ class ExportPlugin(ExportMixin, BaseAdminPlugin):
                 response = HttpResponse(export_data, content_type=content_type)
             except TypeError:
                 response = HttpResponse(export_data, mimetype=content_type)
-            response['Content-Disposition'] = 'attachment; filename=%s' % (
-                self.get_export_filename(file_format),
-            )
+            response[
+                'Content-Disposition'
+            ] = f'attachment; filename={self.get_export_filename(file_format)}'
+
             post_export.send(sender=None, model=self.model)
             return response
+        else:
+            messages.warning(self.request, _('You must select an export format.'))
 
 
 site.register_modelview(r'^import/$', ImportView, name='%s_%s_import')

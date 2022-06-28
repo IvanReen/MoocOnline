@@ -16,7 +16,7 @@ def view_block(context, block_name, *args, **kwargs):
 
     admin_view = context['admin_view']
     nodes = []
-    method_name = 'block_%s' % block_name
+    method_name = f'block_{block_name}'
 
     cls_str = str if six.PY3 else basestring
     for view in [admin_view] + admin_view.plugins:
@@ -25,15 +25,12 @@ def view_block(context, block_name, *args, **kwargs):
             result = block_func(context, nodes, *args, **kwargs)
             if result and isinstance(result, cls_str):
                 nodes.append(result)
-    if nodes:
-        return mark_safe(''.join(nodes))
-    else:
-        return ""
+    return mark_safe(''.join(nodes)) if nodes else ""
 
 
 @register.filter
 def admin_urlname(value, arg):
-    return 'xadmin:%s_%s_%s' % (value.app_label, value.model_name, arg)
+    return f'xadmin:{value.app_label}_{value.model_name}_{arg}'
 
 
 static = register.simple_tag(static)

@@ -179,13 +179,13 @@ class FilterPlugin(BaseAdminPlugin):
         # Apply keyword searches.
         def construct_search(field_name):
             if field_name.startswith('^'):
-                return "%s__istartswith" % field_name[1:]
+                return f"{field_name[1:]}__istartswith"
             elif field_name.startswith('='):
-                return "%s__iexact" % field_name[1:]
+                return f"{field_name[1:]}__iexact"
             elif field_name.startswith('@'):
-                return "%s__search" % field_name[1:]
+                return f"{field_name[1:]}__search"
             else:
-                return "%s__icontains" % field_name
+                return f"{field_name}__icontains"
 
         if self.search_fields and query:
             orm_lookups = [construct_search(str(search_field))

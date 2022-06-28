@@ -51,15 +51,14 @@ def filter_chain(filters, token, func, *args, **kwargs):
         def _inner_method():
             fm = filters[token]
             fargs = getfullargspec(fm)[0]
-            if len(fargs) == 1:
-                # Only self arg
-                result = func()
-                if result is None:
-                    return fm()
-                else:
-                    raise IncorrectPluginArg(u'Plugin filter method need a arg to receive parent method result.')
-            else:
+            if len(fargs) != 1:
                 return fm(func if fargs[1] == '__' else func(), *args, **kwargs)
+            # Only self arg
+            result = func()
+            if result is None:
+                return fm()
+            else:
+                raise IncorrectPluginArg(u'Plugin filter method need a arg to receive parent method result.')
         return filter_chain(filters, token - 1, _inner_method, *args, **kwargs)
 
 
@@ -139,16 +138,18 @@ class BaseAdminObject(object):
         return self.get_view(view_class, self.admin_site._registry.get(model), *args, **kwargs)
 
     def get_admin_url(self, name, *args, **kwargs):
-        return reverse('%s:%s' % (self.admin_site.app_name, name), args=args, kwargs=kwargs)
+        return reverse(f'{self.admin_site.app_name}:{name}', args=args, kwargs=kwargs)
 
     def get_model_url(self, model, name, *args, **kwargs):
         return reverse(
-            '%s:%s_%s_%s' % (self.admin_site.app_name, model._meta.app_label,
-                             model._meta.model_name, name),
-            args=args, kwargs=kwargs, current_app=self.admin_site.name)
+            f'{self.admin_site.app_name}:{model._meta.app_label}_{model._meta.model_name}_{name}',
+            args=args,
+            kwargs=kwargs,
+            current_app=self.admin_site.name,
+        )
 
     def get_model_perm(self, model, name):
-        return '%s.%s_%s' % (model._meta.app_label, name, model._meta.model_name)
+        return f'{model._meta.app_label}.{name}_{model._meta.model_name}'
 
     def has_model_perm(self, model, name, user=None):
         user = user or self.user
@@ -171,7 +172,7 @@ class BaseAdminObject(object):
                     del p[k]
             else:
                 p[k] = v
-        return '?%s' % urlencode(p)
+        return f'?{urlencode(p)}'
 
     def get_form_params(self, new_params=None, remove=None):
         if new_params is None:
@@ -447,8 +448,7 @@ class CommAdminView(BaseAdminView):
                     selected = path.startswith(menu['url'][:chop_index])
             if 'menus' in menu:
                 for m in menu['menus']:
-                    _s = check_selected(m, path)
-                    if _s:
+                    if _s := check_selected(m, path):
                         selected = True
             if selected:
                 menu['selected'] = True
@@ -544,8 +544,10 @@ class ModelAdminView(CommAdminView):
 
     def model_admin_url(self, name, *args, **kwargs):
         return reverse(
-            "%s:%s_%s_%s" % (self.admin_site.app_name, self.opts.app_label,
-                             self.model_name, name), args=args, kwargs=kwargs)
+            f"{self.admin_site.app_name}:{self.opts.app_label}_{self.model_name}_{name}",
+            args=args,
+            kwargs=kwargs,
+        )
 
     def get_model_perms(self):
         """
@@ -563,10 +565,9 @@ class ModelAdminView(CommAdminView):
     def get_template_list(self, template_name):
         opts = self.opts
         return (
-            "xadmin/%s/%s/%s" % (
-                opts.app_label, opts.object_name.lower(), template_name),
-            "xadmin/%s/%s" % (opts.app_label, template_name),
-            "xadmin/%s" % template_name,
+            f"xadmin/{opts.app_label}/{opts.object_name.lower()}/{template_name}",
+            f"xadmin/{opts.app_label}/{template_name}",
+            f"xadmin/{template_name}",
         )
 
     def get_ordering(self):
@@ -587,17 +588,25 @@ class ModelAdminView(CommAdminView):
         view_codename = get_permission_codename('view', self.opts)
         change_codename = get_permission_codename('change', self.opts)
 
-        return ('view' not in self.remove_permissions) and (self.user.has_perm('%s.%s' % (self.app_label, view_codename)) or
-                                                            self.user.has_perm('%s.%s' % (self.app_label, change_codename)))
+        return 'view' not in self.remove_permissions and (
+            self.user.has_perm(f'{self.app_label}.{view_codename}')
+            or self.user.has_perm(f'{self.app_label}.{change_codename}')
+        )
 
     def has_add_permission(self):
         codename = get_permission_codename('add', self.opts)
-        return ('add' not in self.remove_permissions) and self.user.has_perm('%s.%s' % (self.app_label, codename))
+        return 'add' not in self.remove_permissions and self.user.has_perm(
+            f'{self.app_label}.{codename}'
+        )
 
     def has_change_permission(self, obj=None):
         codename = get_permission_codename('change', self.opts)
-        return ('change' not in self.remove_permissions) and self.user.has_perm('%s.%s' % (self.app_label, codename))
+        return 'change' not in self.remove_permissions and self.user.has_perm(
+            f'{self.app_label}.{codename}'
+        )
 
     def has_delete_permission(self, request=None, obj=None):
         codename = get_permission_codename('delete', self.opts)
-        return ('delete' not in self.remove_permissions) and self.user.has_perm('%s.%s' % (self.app_label, codename))
+        return 'delete' not in self.remove_permissions and self.user.has_perm(
+            f'{self.app_label}.{codename}'
+        )

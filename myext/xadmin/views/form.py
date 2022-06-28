@@ -42,8 +42,7 @@ class FormAdminView(CommAdminView):
         self.form_obj = self.view_form(**self.get_form_datas())
 
     def setup_forms(self):
-        helper = self.get_form_helper()
-        if helper:
+        if helper := self.get_form_helper():
             self.form_obj.helper = helper
 
     @filter_hook
@@ -143,7 +142,7 @@ class FormAdminView(CommAdminView):
         if self.request_method == 'get':
             data['initial'].update(self.request.GET)
         else:
-            data.update({'data': self.request.POST, 'files': self.request.FILES})
+            data |= {'data': self.request.POST, 'files': self.request.FILES}
         return data
 
     @filter_hook

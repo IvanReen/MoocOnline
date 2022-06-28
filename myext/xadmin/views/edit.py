@@ -114,27 +114,30 @@ class ModelFormAdminView(ModelAdminView):
     def get_field_attrs(self, db_field, **kwargs):
 
         if db_field.name in self.style_fields:
-            attrs = self.get_field_style(
-                db_field, self.style_fields[db_field.name], **kwargs)
-            if attrs:
+            if attrs := self.get_field_style(
+                db_field, self.style_fields[db_field.name], **kwargs
+            ):
                 return attrs
 
         if hasattr(db_field, "rel") and db_field.rel:
             related_modeladmin = self.admin_site._registry.get(db_field.rel.to)
             if related_modeladmin and hasattr(related_modeladmin, 'relfield_style'):
-                attrs = self.get_field_style(
-                    db_field, related_modeladmin.relfield_style, **kwargs)
-                if attrs:
+                if attrs := self.get_field_style(
+                    db_field, related_modeladmin.relfield_style, **kwargs
+                ):
                     return attrs
 
         if db_field.choices:
             return {'widget': widgets.AdminSelectWidget}
 
-        for klass in db_field.__class__.mro():
-            if klass in self.formfield_overrides:
-                return self.formfield_overrides[klass].copy()
-
-        return {}
+        return next(
+            (
+                self.formfield_overrides[klass].copy()
+                for klass in db_field.__class__.mro()
+                if klass in self.formfield_overrides
+            ),
+            {},
+        )
 
     @filter_hook
     def prepare_form(self):
@@ -145,8 +148,7 @@ class ModelFormAdminView(ModelAdminView):
         self.form_obj = self.model_form(**self.get_form_datas())
 
     def setup_forms(self):
-        helper = self.get_form_helper()
-        if helper:
+        if helper := self.get_form_helper():
             self.form_obj.helper = helper
 
     @filter_hook
@@ -159,10 +161,7 @@ class ModelFormAdminView(ModelAdminView):
         Returns a Form class for use in the admin add view. This is used by
         add_view and change_view.
         """
-        if self.exclude is None:
-            exclude = []
-        else:
-            exclude = list(self.exclude)
+        exclude = [] if self.exclude is None else list(self.exclude)
         exclude.extend(self.get_readonly_fields())
         if self.exclude is None and hasattr(self.form, '_meta') and self.form._meta.exclude:
             # Take the custom ModelForm's Meta.exclude into account only if the
@@ -177,25 +176,19 @@ class ModelFormAdminView(ModelAdminView):
             "exclude": exclude,
             "formfield_callback": self.formfield_for_dbfield,
         }
-        defaults.update(kwargs)
+        defaults |= kwargs
 
         if defaults['fields'] is None and not modelform_defines_fields(defaults['form']):
             defaults['fields'] = forms.ALL_FIELDS
 
         return modelform_factory(self.model, **defaults)
 
-        try:
-            return modelform_factory(self.model, **defaults)
-        except FieldError as e:
-            raise FieldError('%s. Check fields/fieldsets/exclude attributes of class %s.'
-                             % (e, self.__class__.__name__))
-
     @filter_hook
     def get_form_layout(self):
         layout = copy.deepcopy(self.form_layout)
         arr = self.form_obj.fields.keys()
         if six.PY3:
-            arr = [k for k in arr]
+            arr = list(arr)
         fields = arr + list(self.get_readonly_fields())
 
         if layout is None:
@@ -230,9 +223,7 @@ class ModelFormAdminView(ModelAdminView):
         helper.include_media = False
         helper.add_layout(self.get_form_layout())
 
-        # deal with readonly fields
-        readonly_fields = self.get_readonly_fields()
-        if readonly_fields:
+        if readonly_fields := self.get_readonly_fields():
             detail = self.get_model_view(
                 DetailAdminUtil, self.model, self.form_obj.instance)
             for field in readonly_fields:
@@ -265,7 +256,7 @@ class ModelFormAdminView(ModelAdminView):
     @filter_hook
     def save_models(self):
         self.new_obj.save()
-        flag = self.org_obj is None and 'create' or 'change'
+        flag = 'create' if self.org_obj is None else 'change'
         self.log(flag, self.change_message(), self.new_obj)
 
     @filter_hook
@@ -312,31 +303,28 @@ class ModelFormAdminView(ModelAdminView):
             'add': add,
             'change': change,
             'errors': self.get_error_list(),
-
             'has_add_permission': self.has_add_permission(),
             'has_view_permission': self.has_view_permission(),
             'has_change_permission': self.has_change_permission(self.org_obj),
             'has_delete_permission': self.has_delete_permission(self.org_obj),
-
             'has_file_field': True,  # FIXME - this should check if form or formsets have a FileField,
             'has_absolute_url': hasattr(self.model, 'get_absolute_url'),
             'form_url': '',
             'content_type_id': ContentType.objects.get_for_model(self.model).id,
             'save_as': self.save_as,
             'save_on_top': self.save_on_top,
-        }
-
-        # for submit line
-        new_context.update({
+        } | {
             'onclick_attrib': '',
-            'show_delete_link': (new_context['has_delete_permission']
-                                 and (change or new_context['show_delete'])),
+            'show_delete_link': (
+                new_context['has_delete_permission']
+                and (change or new_context['show_delete'])
+            ),
             'show_save_as_new': change and self.save_as,
-            'show_save_and_add_another': new_context['has_add_permission'] and
-                                (not self.save_as or add),
+            'show_save_and_add_another': new_context['has_add_permission']
+            and (not self.save_as or add),
             'show_save_and_continue': new_context['has_change_permission'],
-            'show_save': True
-        })
+            'show_save': True,
+        }
 
         if self.org_obj and new_context['show_delete_link']:
             new_context['delete_url'] = self.model_admin_url(
@@ -378,18 +366,17 @@ class CreateAdminView(ModelFormAdminView):
     def get_form_datas(self):
         # Prepare the dict of initial data from the request.
         # We have to special-case M2Ms as a list of comma-separated PKs.
-        if self.request_method == 'get':
-            initial = dict(self.request.GET.items())
-            for k in initial:
-                try:
-                    f = self.opts.get_field(k)
-                except models.FieldDoesNotExist:
-                    continue
-                if isinstance(f, models.ManyToManyField):
-                    initial[k] = initial[k].split(",")
-            return {'initial': initial}
-        else:
+        if self.request_method != 'get':
             return {'data': self.request.POST, 'files': self.request.FILES}
+        initial = dict(self.request.GET.items())
+        for k in initial:
+            try:
+                f = self.opts.get_field(k)
+            except models.FieldDoesNotExist:
+                continue
+            if isinstance(f, models.ManyToManyField):
+                initial[k] = initial[k].split(",")
+        return {'initial': initial}
 
     @filter_hook
     def get_context(self):
@@ -431,12 +418,17 @@ class CreateAdminView(ModelFormAdminView):
                                                                  'obj': "<a class='alert-link' href='%s'>%s</a>" % (self.model_admin_url('change', self.new_obj._get_pk_val()), force_text(self.new_obj))}
 
         if "_continue" in request.POST:
-            self.message_user(
-                msg + ' ' + _("You may edit it again below."), 'success')
+            self.message_user(f'{msg} ' + _("You may edit it again below."), 'success')
             return self.model_admin_url('change', self.new_obj._get_pk_val())
 
         if "_addanother" in request.POST:
-            self.message_user(msg + ' ' + (_("You may add another %s below.") % force_text(self.opts.verbose_name)), 'success')
+            self.message_user(
+                f'{msg} '
+                + _("You may add another %s below.")
+                % force_text(self.opts.verbose_name),
+                'success',
+            )
+
             return request.path
         else:
             self.message_user(msg, 'success')
@@ -471,8 +463,7 @@ class UpdateAdminView(ModelFormAdminView):
     def get_form_datas(self):
         params = {'instance': self.org_obj}
         if self.request_method == 'post':
-            params.update(
-                {'data': self.request.POST, 'files': self.request.FILES})
+            params |= {'data': self.request.POST, 'files': self.request.FILES}
         return params
 
     @filter_hook
@@ -526,12 +517,17 @@ class UpdateAdminView(ModelFormAdminView):
         msg = _('The %(name)s "%(obj)s" was changed successfully.') % {'name':
                                                                        force_text(verbose_name), 'obj': force_text(obj)}
         if "_continue" in request.POST:
-            self.message_user(
-                msg + ' ' + _("You may edit it again below."), 'success')
+            self.message_user(f'{msg} ' + _("You may edit it again below."), 'success')
             return request.path
         elif "_addanother" in request.POST:
-            self.message_user(msg + ' ' + (_("You may add another %s below.")
-                                           % force_text(verbose_name)), 'success')
+            self.message_user(
+                (
+                    f'{msg} '
+                    + _("You may add another %s below.") % force_text(verbose_name)
+                ),
+                'success',
+            )
+
             return self.model_admin_url('add')
         else:
             self.message_user(msg, 'success')

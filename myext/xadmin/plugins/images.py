@@ -66,11 +66,10 @@ class ModelDetailPlugin(BaseAdminPlugin):
         return attrs
 
     def get_field_result(self, result, field_name):
-        if isinstance(result.field, models.ImageField):
-            if result.value:
-                img = getattr(result.obj, field_name)
-                result.text = mark_safe('<a href="%s" target="_blank" title="%s" data-gallery="gallery"><img src="%s" class="field_img"/></a>' % (img.url, result.label, img.url))
-                self.include_image = True
+        if isinstance(result.field, models.ImageField) and result.value:
+            img = getattr(result.obj, field_name)
+            result.text = mark_safe('<a href="%s" target="_blank" title="%s" data-gallery="gallery"><img src="%s" class="field_img"/></a>' % (img.url, result.label, img.url))
+            self.include_image = True
         return result
 
     # Media

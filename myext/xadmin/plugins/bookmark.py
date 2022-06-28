@@ -31,10 +31,7 @@ class BookmarkPlugin(BaseAdminPlugin):
     show_bookmarks = True
 
     def has_change_permission(self, obj=None):
-        if not obj or self.user.is_superuser:
-            return True
-        else:
-            return obj.user == self.user
+        return True if not obj or self.user.is_superuser else obj.user == self.user
 
     def get_context(self, context):
         if not self.show_bookmarks:
@@ -176,10 +173,7 @@ class BookmarkAdmin(object):
         return list_display
 
     def has_change_permission(self, obj=None):
-        if not obj or self.user.is_superuser:
-            return True
-        else:
-            return obj.user == self.user
+        return True if not obj or self.user.is_superuser else obj.user == self.user
 
 
 @widget_manager.register
@@ -217,17 +211,15 @@ class BookmarkWidget(PartialBaseWidget):
 
         base_fields = list_view.base_list_display
         if len(base_fields) > 5:
-            base_fields = base_fields[0:5]
+            base_fields = base_fields[:5]
 
         context['result_headers'] = [c for c in list_view.result_headers(
         ).cells if c.field_name in base_fields]
         context['results'] = [
-            [o for i, o in enumerate(filter(
-                lambda c: c.field_name in base_fields,
-                r.cells
-            ))]
+            list(filter(lambda c: c.field_name in base_fields, r.cells))
             for r in list_view.results()
         ]
+
         context['result_count'] = list_view.result_count
         context['page_url'] = self.bookmark.url
 

@@ -32,7 +32,7 @@ class AggregationPlugin(BaseAdminPlugin):
             try:
                 f = self.opts.get_field(field_name)
                 agg_method = self.aggregate_fields[field_name]
-                key = '%s__%s' % (field_name, agg_method)
+                key = f'{field_name}__{agg_method}'
                 if key not in obj:
                     item.text = ""
                 else:

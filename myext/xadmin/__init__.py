@@ -53,7 +53,7 @@ def autodiscover():
         # Attempt to import the app's admin module.
         try:
             before_import_registry = site.copy_registry()
-            import_module('%s.adminx' % app_config.name)
+            import_module(f'{app_config.name}.adminx')
         except:
             # Reset the model registry to the state before the last import as
             # this import will have to reoccur on the next request and this

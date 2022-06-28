@@ -76,7 +76,7 @@ class UEditorWidget(forms.Textarea):
                         "toolbars"] = USettings.TOOLBARS_SETTINGS[toolbars]
         except:
             pass
-        self.ueditor_settings.update(settings)
+        self.ueditor_settings |= settings
         super(UEditorWidget, self).__init__(attrs)
 
     # def recalc_path(self, model_inst):
@@ -168,7 +168,7 @@ class UEditorWidget(forms.Textarea):
         if value is None:
             value = ''
         # 传入模板的参数
-        editor_id = "id_%s" % name.replace("-", "_")
+        editor_id = f'id_{name.replace("-", "_")}'
         uSettings = {
             "name": name,
             "id": editor_id,
@@ -176,17 +176,17 @@ class UEditorWidget(forms.Textarea):
         }
         if isinstance(self.command, list):
             cmdjs = ""
-            if isinstance(self.command, list):
-                for cmd in self.command:
-                    cmdjs = cmdjs + cmd.render(editor_id)
-            else:
-                cmdis = self.command.render(editor_id)
+            for cmd in self.command:
+                cmdjs = cmdjs + cmd.render(editor_id)
             uSettings["commands"] = cmdjs
 
         uSettings["settings"] = self.ueditor_settings.copy()
-        uSettings["settings"].update({
-            "serverUrl": "/ueditor/controller/?%s" % urlencode(self._upload_settings)
-        })
+        uSettings["settings"].update(
+            {
+                "serverUrl": f"/ueditor/controller/?{urlencode(self._upload_settings)}"
+            }
+        )
+
         # 生成事件侦听
         if self.event_handler:
             uSettings["bindEvents"] = self.event_handler.render(editor_id)

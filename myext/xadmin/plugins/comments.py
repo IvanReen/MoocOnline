@@ -15,7 +15,7 @@ class UsernameSearch(object):
     search in CommentAdmin.
     """
     def __str__(self):
-        return 'user__%s' % username_field
+        return f'user__{username_field}'
 
 
 class CommentsAdmin(object):

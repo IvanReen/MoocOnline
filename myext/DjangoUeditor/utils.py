@@ -27,13 +27,9 @@ class FileSize():
                 size_Byte = int(oSize)
             pattern = re.compile(
                 r"(\d*\.?(?=\d)\d*)(byte|kb|mb|gb|tb)", re.I)
-            match = pattern.match(oSize)
-            if match:
+            if match := pattern.match(oSize):
                 m_size, m_unit = match.groups()
-                if m_size.find(".") == -1:
-                    m_size = int(m_size)
-                else:
-                    m_size = float(m_size)
+                m_size = int(m_size) if m_size.find(".") == -1 else float(m_size)
                 size_Byte = m_size * FileSize.SIZE_UNIT[m_unit]
         return size_Byte
 
@@ -62,7 +58,7 @@ class FileSize():
         print(unit)
 
         if (self.size % FileSize.SIZE_UNIT[unit]) == 0:
-            return "%s%s" % ((self.size / FileSize.SIZE_UNIT[unit]), unit)
+            return f"{self.size / FileSize.SIZE_UNIT[unit]}{unit}"
         else:
             return "%0.2f%s" % (
                 round(float(self.size) / float(FileSize.SIZE_UNIT[unit]), 2), unit)
@@ -84,49 +80,33 @@ class FileSize():
             return FileSize(self.size - FileSize(other).size)
 
     def __gt__(self, other):
-        if isinstance(other, FileSize):
-            if self.size > other.size:
-                return True
-            else:
-                return False
-        else:
-            if self.size > FileSize(other).size:
-                return True
-            else:
-                return False
+        return (
+            isinstance(other, FileSize)
+            and self.size > other.size
+            or not isinstance(other, FileSize)
+            and self.size > FileSize(other).size
+        )
 
     def __lt__(self, other):
-        if isinstance(other, FileSize):
-            if other.size > self.size:
-                return True
-            else:
-                return False
-        else:
-            if FileSize(other).size > self.size:
-                return True
-            else:
-                return False
+        return (
+            isinstance(other, FileSize)
+            and other.size > self.size
+            or not isinstance(other, FileSize)
+            and FileSize(other).size > self.size
+        )
 
     def __ge__(self, other):
-        if isinstance(other, FileSize):
-            if self.size >= other.size:
-                return True
-            else:
-                return False
-        else:
-            if self.size >= FileSize(other).size:
-                return True
-            else:
-                return False
+        return (
+            isinstance(other, FileSize)
+            and self.size >= other.size
+            or not isinstance(other, FileSize)
+            and self.size >= FileSize(other).size
+        )
 
     def __le__(self, other):
-        if isinstance(other, FileSize):
-            if other.size >= self.size:
-                return True
-            else:
-                return False
-        else:
-            if FileSize(other).size >= self.size:
-                return True
-            else:
-                return False
+        return (
+            isinstance(other, FileSize)
+            and other.size >= self.size
+            or not isinstance(other, FileSize)
+            and FileSize(other).size >= self.size
+        )

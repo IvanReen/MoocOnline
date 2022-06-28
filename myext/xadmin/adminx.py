@@ -15,8 +15,11 @@ class LogAdmin(object):
 
     def link(self, instance):
         if instance.content_type and instance.object_id and instance.action_flag != 'delete':
-            admin_url = self.get_admin_url('%s_%s_change' % (instance.content_type.app_label, instance.content_type.model), 
-                instance.object_id)
+            admin_url = self.get_admin_url(
+                f'{instance.content_type.app_label}_{instance.content_type.model}_change',
+                instance.object_id,
+            )
+
             return "<a href='%s'>%s</a>" % (admin_url, _('Admin Object'))
         else:
             return ''

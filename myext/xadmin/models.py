@@ -28,14 +28,16 @@ def add_view_permissions(sender, **kwargs):
     # for each of our content types
     for content_type in ContentType.objects.all():
         # build our permission slug
-        codename = "view_%s" % content_type.model
+        codename = f"view_{content_type.model}"
 
         # if it doesn't exist..
         if not Permission.objects.filter(content_type=content_type, codename=codename):
             # add it
-            Permission.objects.create(content_type=content_type,
-                                      codename=codename,
-                                      name="Can view %s" % content_type.name)
+            Permission.objects.create(
+                content_type=content_type,
+                codename=codename,
+                name=f"Can view {content_type.name}",
+            )
             # print "Added view permission for %s" % content_type.name
 
 # check for all our view permissions after a syncdb
@@ -55,7 +57,7 @@ class Bookmark(models.Model):
     def url(self):
         base_url = reverse(self.url_name)
         if self.query:
-            base_url = base_url + '?' + self.query
+            base_url = f'{base_url}?{self.query}'
         return base_url
 
     def __str__(self):
@@ -76,7 +78,7 @@ class JSONEncoder(DjangoJSONEncoder):
         elif isinstance(o, decimal.Decimal):
             return str(o)
         elif isinstance(o, ModelBase):
-            return '%s.%s' % (o._meta.app_label, o._meta.model_name)
+            return f'{o._meta.app_label}.{o._meta.model_name}'
         else:
             try:
                 return super(JSONEncoder, self).default(o)
@@ -97,7 +99,7 @@ class UserSettings(models.Model):
         self.value = json.dumps(obj, cls=JSONEncoder, ensure_ascii=False)
 
     def __str__(self):
-        return "%s %s" % (self.user, self.key)
+        return f"{self.user} {self.key}"
 
     class Meta:
         verbose_name = _(u'User Setting')
@@ -126,14 +128,21 @@ class UserWidget(models.Model):
         if created:
             try:
                 portal_pos = UserSettings.objects.get(
-                    user=self.user, key="dashboard:%s:pos" % self.page_id)
-                portal_pos.value = "%s,%s" % (self.pk, portal_pos.value) if portal_pos.value else self.pk
+                    user=self.user, key=f"dashboard:{self.page_id}:pos"
+                )
+
+                portal_pos.value = (
+                    f"{self.pk},{portal_pos.value}"
+                    if portal_pos.value
+                    else self.pk
+                )
+
                 portal_pos.save()
             except Exception:
                 pass
 
     def __str__(self):
-        return "%s %s widget" % (self.user, self.widget_type)
+        return f"{self.user} {self.widget_type} widget"
 
     class Meta:
         verbose_name = _(u'User Widget')

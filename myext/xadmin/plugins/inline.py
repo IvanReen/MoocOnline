@@ -105,7 +105,7 @@ class TableInlineStyle(InlineStyle):
         readonly_fields = []
         if len(self.formset):
             fields = [f for k, f in self.formset[0].fields.items() if k != DELETION_FIELD_NAME]
-            readonly_fields = [f for f in getattr(self.formset[0], 'readonly_fields', [])]
+            readonly_fields = list(getattr(self.formset[0], 'readonly_fields', []))
         return {
             'fields': fields,
             'readonly_fields': readonly_fields
@@ -147,10 +147,7 @@ class InlineModelAdmin(ModelFormAdminView):
     @filter_hook
     def get_formset(self, **kwargs):
         """Returns a BaseInlineFormSet class for use in admin add/change views."""
-        if self.exclude is None:
-            exclude = []
-        else:
-            exclude = list(self.exclude)
+        exclude = [] if self.exclude is None else list(self.exclude)
         exclude.extend(self.get_readonly_fields())
         if self.exclude is None and hasattr(self.form, '_meta') and self.form._meta.exclude:
             # Take the custom ModelForm's Meta.exclude into account only if the
@@ -171,7 +168,7 @@ class InlineModelAdmin(ModelFormAdminView):
             "max_num": self.max_num,
             "can_delete": can_delete,
         }
-        defaults.update(kwargs)
+        defaults |= kwargs
 
         return inlineformset_factory(self.parent_model, self.model, **defaults)
 
@@ -183,10 +180,12 @@ class InlineModelAdmin(ModelFormAdminView):
             'queryset': self.queryset()
         }
         if self.request_method == 'post':
-            attrs.update({
-                'data': self.request.POST, 'files': self.request.FILES,
-                'save_as_new': "_saveasnew" in self.request.POST
-            })
+            attrs |= {
+                'data': self.request.POST,
+                'files': self.request.FILES,
+                'save_as_new': "_saveasnew" in self.request.POST,
+            }
+
         instance = formset(**attrs)
         instance.view = self
 
@@ -221,12 +220,10 @@ class InlineModelAdmin(ModelFormAdminView):
         instance.helper = helper
         instance.style = style
 
-        readonly_fields = self.get_readonly_fields()
-        if readonly_fields:
+        if readonly_fields := self.get_readonly_fields():
             for form in instance:
                 form.readonly_fields = []
-                inst = form.save(commit=False)
-                if inst:
+                if inst := form.save(commit=False):
                     meta_field_names = [field.name for field in inst._meta.get_fields()]
                     for readonly_field in readonly_fields:
                         value = None
@@ -247,10 +244,10 @@ class InlineModelAdmin(ModelFormAdminView):
     def has_auto_field(self, form):
         if form._meta.model._meta.has_auto_field:
             return True
-        for parent in form._meta.model._meta.get_parent_list():
-            if parent._meta.has_auto_field:
-                return True
-        return False
+        return any(
+            parent._meta.has_auto_field
+            for parent in form._meta.model._meta.get_parent_list()
+        )
 
     def queryset(self):
         queryset = super(InlineModelAdmin, self).queryset()
@@ -263,7 +260,7 @@ class InlineModelAdmin(ModelFormAdminView):
             return self.has_change_permission()
 
         codename = get_permission_codename('add', self.opts)
-        return self.user.has_perm("%s.%s" % (self.opts.app_label, codename))
+        return self.user.has_perm(f"{self.opts.app_label}.{codename}")
 
     def has_change_permission(self):
         opts = self.opts
@@ -274,14 +271,14 @@ class InlineModelAdmin(ModelFormAdminView):
                     break
 
         codename = get_permission_codename('change', opts)
-        return self.user.has_perm("%s.%s" % (opts.app_label, codename))
+        return self.user.has_perm(f"{opts.app_label}.{codename}")
 
     def has_delete_permission(self):
         if self.opts.auto_created:
             return self.has_change_permission()
 
         codename = get_permission_codename('delete', self.opts)
-        return self.user.has_perm("%s.%s" % (self.opts.app_label, codename))
+        return self.user.has_perm(f"{self.opts.app_label}.{codename}")
 
 
 class GenericInlineModelAdmin(InlineModelAdmin):
@@ -291,10 +288,7 @@ class GenericInlineModelAdmin(InlineModelAdmin):
     formset = BaseGenericInlineFormSet
 
     def get_formset(self, **kwargs):
-        if self.exclude is None:
-            exclude = []
-        else:
-            exclude = list(self.exclude)
+        exclude = [] if self.exclude is None else list(self.exclude)
         exclude.extend(self.get_readonly_fields())
         if self.exclude is None and hasattr(self.form, '_meta') and self.form._meta.exclude:
             # Take the custom ModelForm's Meta.exclude into account only if the
@@ -315,7 +309,7 @@ class GenericInlineModelAdmin(InlineModelAdmin):
             "exclude": exclude,
             'fields': forms.ALL_FIELDS
         }
-        defaults.update(kwargs)
+        defaults |= kwargs
 
         return generic_inlineformset_factory(self.model, **defaults)
 
@@ -325,7 +319,7 @@ class InlineFormset(Fieldset):
     def __init__(self, formset, allow_blank=False, **kwargs):
         self.fields = []
         self.css_class = kwargs.pop('css_class', '')
-        self.css_id = "%s-group" % formset.prefix
+        self.css_id = f"{formset.prefix}-group"
         self.template = formset.style.template
         self.inline_style = formset.style.name
         if allow_blank and len(formset) == 0:
@@ -364,8 +358,7 @@ def get_first_field(layout, clz):
         if issubclass(layout_object.__class__, clz):
             return layout_object
         elif hasattr(layout_object, 'get_field_names'):
-            gf = get_first_field(layout_object, clz)
-            if gf:
+            if gf := get_first_field(layout_object, clz):
                 return gf
 
 
@@ -460,16 +453,20 @@ class InlineFormsetPlugin(BaseAdminPlugin):
     def _get_detail_formset_instance(self, inline):
         formset = inline.instance_form(extra=0, max_num=0, can_delete=0)
         formset.detail_page = True
-        if True:
-            replace_field_to_value(formset.helper.layout, inline)
-            model = inline.model
-            opts = model._meta
-            fake_admin_class = type(str('%s%sFakeAdmin' % (opts.app_label, opts.model_name)), (object, ), {'model': model})
-            for form in formset.forms:
-                instance = form.instance
-                if instance.pk:
-                    form.detail = self.get_view(
-                        DetailAdminUtil, fake_admin_class, instance)
+        replace_field_to_value(formset.helper.layout, inline)
+        model = inline.model
+        opts = model._meta
+        fake_admin_class = type(
+            str(f'{opts.app_label}{opts.model_name}FakeAdmin'),
+            (object,),
+            {'model': model},
+        )
+
+        for form in formset.forms:
+            instance = form.instance
+            if instance.pk:
+                form.detail = self.get_view(
+                    DetailAdminUtil, fake_admin_class, instance)
         return formset
 
 
